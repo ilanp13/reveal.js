@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Spectral Clustering</title>
+
+		<meta name="description" content="A presentation on spectral clustering for applied mathematics seminar, May 2016">
+		<meta name="author" content="Ilan Peretz">
+
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/simple.css" id="theme">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+				<section>
+					<h3>Spectral Clustering</h3>
+					<h6>By Ilan Peretz</h6>
+				</section>
+
+				<section>
+					<section>
+						<h3>What does "Spectral Clustering" means anyway?</h3>
+					</section>
+
+					<section>
+						<h3>What is Clustering?</h3>
+						<ul class="fragment">
+							<li>
+								<q>&ldquo;Clustering is the task of grouping a set of objects in such a way that objects in the same group (called a cluster) are more similar (in some sense or another) to each other than to those in other groups (clusters).&rdquo;</q><p>(-- <a href="https://en.wikipedia.org/wiki/Cluster_analysis" target="_blank">Wikipedia</a>)</p>
+							</li>
+							<li class="fragment">
+								<p>So the goal is the same as we've seen before in this room: creating an algorithm that upon receiving a sample of sort, will be able to decide and know in which group to put that sample.</p>
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Why Spectral? What is the renovation here?</h3>
+						<ul>
+							<li class="fragment">
+								<p>Spectral is coming from the terminology <b>Spectral Graph Theory</b>.</p>
+							</li>
+							<li class="fragment">
+								<span><q>&ldquo;In mathematics, <b>spectral graph theory</b> is the study of properties of a graph in relationship to the characteristic polynomial, eigenvalues, and eigenvectors of matrices associated to the graph, such as its adjacency matrix or Laplacian matrix.&rdquo;</q>(-- <a href="https://en.wikipedia.org/wiki/Spectral_graph_theory" target="_blank">Wikipedia</a>)</span>
+							</li>
+							<li class="fragment">
+								<p>So in this algorithm, we will use Similarity Graphs and their Adjacency Matrix, which we will use to create the Laplacian Matrix of the graph, or the Graph Laplacian.</p>
+							</li>
+						</ul>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h3>Lets start with some general definitions:</h3>
+					</section>
+					<section>
+						<h3>Similarity Graphs</h3>
+						<ul>
+							<li class="fragment">
+								So, we have a set of data points $ x_1, ..., x_n $ and some similarity parameter $ s_{ij} \geq 0 $ between all pairs of points $ x_i $ and $ x_j $. One way to represent the data is in the form of similarity graph $ G=(V,E) $:
+								<ul>
+									<li class="fragment">Each vertex $ v_i \in V$ represents a data point $ x_i $.</li>
+									<li class="fragment">Two vertices $ s_i $ and $ s_j $ are connected if $ s_{ij} \geq a $, when $ a $ is 0 or other threshold, and then the edge $e=(s_i,s_j) \in E$ has weight $s_{ij}$. </li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Similarity Graphs - continue</h3>
+						<p>So now we can reformulate the problem of clustering to the problem of finding a partition of the graph $G$ such that the edges between the different groups in the partition have very low (if at all) weights, and the weights of edges inside a group have a very high weights.</p>
+					</section>
+					<section>
+						<h3>Graph Adjacency Matrix</h3>
+						<ul>
+							<li>
+								Let $G=(V,E)$ be an undirected graph with vertex set $V=\{v_1,...,v_n\}$.
+								We also assume that the graph is weighted with non-negative weights $w_{ij}$.
+							</li>
+							<li class="fragment">
+								The weighted <i>adjacency matrix</i> of the graph is the matrix $W=(w_{ij})_{i,j=1,...,n}$.
+							</li>
+							<li class="fragment">
+								Note:
+								<ol>
+									<li>
+										$w_{ij}=0$ means that $v_i$ and $v_j$ are not connected by an edge.
+									</li>
+									<li class="fragment">
+										$w_{ij}=w_{ji}$ as $G$ is undirected.
+									</li>
+								</ol>
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Degree Matrix</h3>
+						<ul>
+							<li>
+								The degree of $v_i \in V$ is defined as: \[d_i=\sum_{j=1}^n w_{ij}\]
+							</li>
+							<li class="fragment">
+								The <i>degree matrix</i> is the diagonal matrix, when the cells on the diagonal are $d_1,...,d_n$. In other words, every value on the diagonal of $D$ is the sum of the cells of the same column in $W$.
+							</li>
+						</ul>
+					</section>
+					<section>
+
+					</section>
+				</section>
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				transition: 'slide', // none/fade/slide/convex/concave/zoom
+
+				math: {
+					mathjax: 'plugin/MathJax/MathJax.js',
+					config: 'TeX-AMS_HTML-full'  // See http://docs.mathjax.org/en/latest/config-files.html
+				},
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/math/math.js', async: true }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
