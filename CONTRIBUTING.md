@@ -1,6 +1,6 @@
 ## Contributing
 
-Please keep the [issue tracker](http://github.com/hakimel/reveal.js/issues) limited to **bug reports**, **feature requests** and **pull requests**.
+Please keep the [issue tracker](http://github.com/ilanp13/reveal.js/issues) limited to **bug reports**, **feature requests** and **pull requests**.
 
 
 ### Personal Support
@@ -20,4 +20,4 @@ When reporting a bug make sure to include information about which browser and op
 
 
 ### Plugins
-Please do not submit plugins as pull requests. They should be maintained in their own separate repository. More information here: https://github.com/hakimel/reveal.js/wiki/Plugin-Guidelines
+Please do not submit plugins as pull requests. They should be maintained in their own separate repository. More information here: https://github.com/ilanp13/reveal.js/wiki/Plugin-Guidelines

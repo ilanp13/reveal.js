@@ -128,7 +128,50 @@
 						</ul>
 					</section>
 					<section>
-
+						<h3>Some graph partition notations</h3>
+						<ul>
+							<li>If $A \subset V$ is a subset of vertices, then $\bar{A}$ is the complement $V \setminus A$.</li>
+							<li class="fragment">
+								Vector indicator : $\mathbb{1}_A=(f_1,...,f_n)' \in \{0,1\}$, when $f_i=1$ if $v_i \in A$ and $f_i=0$ if $v_i \notin A$. We'll shortify it to $i \in A$ for $\{i \mid v_i \in A\}$.
+							</li>
+							<li class="fragment">
+								For any two sets $A,B$(not necessarily disjoint) we can define:
+								\[
+								W(A,B) := \sum_{i \in A,j \in B}W_{ij}
+								\]
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Some graph partition notations - continue</h3>
+						<ul>
+							<li>
+								There are two options to measure the "size" of subset $A \subset V $ :
+								<ol>
+									<li class="fragment">
+										$|A| := \#\{v_i \in A\}$ (number of vertices in $A$).
+									</li>
+									<li class="fragment">
+										$vol(A) := \sum_{i \in A}d_i$
+										(Summing over the weights of all the edges attached to vertices in $A$).
+									</li>
+								</ol>
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h3>graph connectivity</h3>
+						<ul>
+							<li>
+								$A \subset V$ is <i>connected</i> if any two vertices in $A$ can be joined by path, that does not leave $A$ (every vertex on the path is in $A$).
+							</li>
+							<li class="fragment">
+								$A \subset V$ is called <i>connected component</i> if it is connected and there are no connections between vertices in $A$ and $\bar{A}$.
+							</li>
+							<li class="fragment">
+								The nonempty set $ A_1,...,A_k $ form a <i>partition of $G$</i> if $A_i \cap A_j = \emptyset $ ($\forall i,j \in [1,k], i\neq j$) and $ A_1 \cup \cdot\cdot\cdot \cup A_k= V$.
+							</li>
+						</ul>
 					</section>
 				</section>
 
@@ -141,7 +184,7 @@
 
 		<script>
 
-			// More info https://github.com/hakimel/reveal.js#configuration
+			// More info https://github.com/ilanp13/reveal.js#configuration
 			Reveal.initialize({
 				controls: true,
 				progress: true,
@@ -154,7 +197,7 @@
 					mathjax: 'plugin/MathJax/MathJax.js',
 					config: 'TeX-AMS_HTML-full'  // See http://docs.mathjax.org/en/latest/config-files.html
 				},
-				// More info https://github.com/hakimel/reveal.js#dependencies
+				// More info https://github.com/ilanp13/reveal.js#dependencies
 				dependencies: [
 					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
 					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
