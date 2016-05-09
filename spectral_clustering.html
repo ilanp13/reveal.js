@@ -59,7 +59,7 @@
 						</ul>
 					</section>
 					<section>
-						<h3>Why Spectral? What is the renovation here?</h3>
+						<h3>What is the meaning of Spectral?</h3>
 						<ul>
 							<li class="fragment">
 								<p>Spectral is coming from the terminology <b>Spectral Graph Theory</b>.</p>
@@ -173,8 +173,189 @@
 							</li>
 						</ul>
 					</section>
+					<section>
+						<h3>Types of similarity graphs</h3>
+						<p>We'll mention the popular constructions to transform our data points into graph:</p>
+						<ul>
+							<li class="fragment">
+								<strong>The $\epsilon$-neighborhood graph:</strong> Connect all points whose pairwise similarities/distances are smaller than $\epsilon$.
+							</li>
+							<li class="fragment">
+								<strong>$k$-nearest neighbor graphs:</strong> Connect vertex $v_i$ with vertex $v_j$ if $v_j$ is among the $k$-nearest neighbors of $v_i$. The result here is a directed graph, so there are two undirected versions of it:
+								<ul>
+									<li class="fragment">
+										<i>$k$-nearest neighbor graphs</i> - connect $v_i$ and $v_j$ if $v_i$ is $k$-neighbor of $v_j$ <strong>or</strong> if $v_j$ is $k$-neighbor of $v_i$.
+									</li>
+									<li class="fragment">
+										<i>Mutual $k$-nearest neighbor graphs</i> - connect $v_i$ and $v_j$ if $v_i$ is $k$-neighbor of $v_j$ <strong>and</strong> if $v_j$ is $k$-neighbor of $v_i$.
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Types of similarity graphs - continue</h3>
+						<ul>
+							<li class="fragment">
+								<strong>The fully connected graph:</strong> Connect all points with positive similarity between them, which is the weight of the edge. This type is only useful if the similarity function itself models local neighborhoods. As example we can take the Gaussian similarity function:
+								\[
+								s(x_i,x_j)=e^{{-\|x_i-x_j\|^2}/{2\sigma^2}}
+								\]
+								where $\sigma$ controls the width of the neighborhood (similar to the $\epsilon$ before).
+							</li>
+						</ul>
+						<p>All this graphs are used in spectral clustering. There is no info on how the choice of method influence the results.</p>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h3>Graph Laplacians</h3>
+						<h4>And their (basic) properties</h4>
+					</section>
+					<section>
+						<h3>Graph Laplacians</h3>
+						<p>As we mentioned earlier, the concept of Spectral Clustering is coming from the field of <i>spectral graph theory</i>, in which graph Laplacians matrices are the primary tool. So they will be primary tool in spectral clustering as well.</p>
+						<p>We are now going to define the graph Laplacians and mention their most important properties.</p>
+						<small>Note: There is no unique convention which matrix exactly is called "graph Laplacians". <br />Mostly, every author gives is own version of it.</small>
+					</section>
+					<section>
+						<h3>Graph Laplacians</h3>
+						<h4>Pre-assumptions:</h4>
+						<ul>
+							<li class="fragment">
+								Graph $G$ is an undirected, weighted graph with weight matrix $W$, where $w_{ij}=w_{ji}\geq0$.
+							</li>
+							<li class="fragment">
+								Eigenvectors of a matrix not necessarily have to be normalized. (For example, the vector $e_i$ and the vector $ae_i$ for some $a\neq0$ will be considered the same vector).
+							</li>
+							<li class="fragment">
+								Eigenvalues will be ordered increasingly, respecting multiplicities.
+							</li>
+							<li class="fragment">
+								By "the first $k$ eigenvectors" we refer to the eigenvectors corresponding to the $k$ smallest eigenvalues.
+							</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Unnormalized Graph Laplacians</h3>
+						<p>Considering D - the <i>degree matrix</i> of $G$, and $W$ - the weight matrix of $G$, we get the <strong><i>unnormalized graph Laplacian</i></strong>:
+						\[
+							L=D-W
+							\]
+						</p>
+						<br />
+						<br />
+						<small class="fragment">Note: self edges, which "sits" on the diagonal of the adjacency matrix $W$, do not change the graph Laplacians.</small>
+					</section>
+					<section id="unnormalized_lapl">
+						<h3>Unnormalized Graph Laplacians</h3>
+						<h4>Lets introduce some important properties of $L$:</h4>
+						<ol>
+							<li class="fragment">
+								For every vector $f \in \mathbb{R}^n$ we have:
+								$f'Lf=\frac{1}{2}\sum_{i,j=1}^nw_{ij}(f_i-f_j)^2$
+							</li>
+							<li class="fragment">
+								$L$ is symmetric and positive semi-definite.
+							</li>
+							<li class="fragment">
+								The smallest eigenvalue of $L$ is $0$, the corresponding eigenvector is the constant one vector $\mathbb{1}$.
+							</li>
+							<li class="fragment">
+								$L$ has $n$ non-negative, real-valued eigenvalues $0=\lambda_1\leq\lambda_2\leq\cdot\cdot\cdot\leq\lambda_n$.
+							</li>
+						</ol>
+						<br />
+						<br />
+						<small class="fragment">The <i>proof</i> of the 4 properties can be found in the appendix <a href="#proof1">here</a>.</small>
+					</section>
+					<section id="spectrum_of_L">
+						<h3>Unnormalized Graph Laplacians</h3>
+						<h4>Number of connected components and the spectrum of $L$</h4>
+						<p>Let $G$ be an undirected graph with non-negative weights. Then the multiplicity $k$ of the eigenvalue $0$ of $L$ equals the number of connected components $A_1,...,A_k$ in the graph. The eigenspace of eigenvalue $0$ is spanned by the indicator vectors $\mathbb{1}_{A_1},...,\mathbb{1}_{A_k}$ of those components.</p>
+						<br />
+						<br />
+						<small class="fragment">The <i>proof</i> can be found in the appendix <a href="#proof2">here</a>.</small>
+					</section>
+					<section>
+						<h3>The normalized graph Laplacians</h3>
+						<p>There are two matrices which are called normalized graph Laplacians in the literature. Both of them are closely related to each other:</p>
+						<p class="fragment">
+							A symmetric normalized graph Laplacian:
+						\[
+							L_{sym}:=D^{-1/2}LD^{-1/2}=I-D^{-1/2}WD^{-1/2}
+							\]</p>
+						<p class="fragment">
+							A Random Walk like normalized graph Laplacian:
+						\[
+							L_{rw}:=D^{-1}L=I-d^{-1}W
+							\]</p>
+					</section>
+					<section id="prop_of_L_and_L_0">
+						<h3>The normalized graph Laplacians</h3>
+						<h4>Properties of $L_{sym}$ and $L_{rw}$</h4>
+						<ol>
+							<li class="fragment">
+								For every vector $f \in \mathbb{R}^n$ we have:
+								\[
+								f'L_{sym}f=\frac{1}{2}\sum_{i,j=1}^nw_{ij}\Bigg(\frac{f_i}{\sqrt{d_i}}-\frac{f_j}{\sqrt{d_j}}\Bigg)^2
+								\]
+							</li>
+							<li class="fragment">
+								$\lambda$ is an eigenvalue of $L_{rw}$ with eigenvector $u$ if and only if $\lambda$ is an eigenvalue of $L_{sym}$ with eigenvector $w=D^{1/2}u$.
+							</li>
+							<li class="fragment">
+								$\lambda$ is an eigenvalue of $L_{rw}$ with eigenvector $u$ if and only if $\lambda$ and $u$ solve the generalized eigen-problem $Lu=\lambda Du$.
+							</li>
+						</ol>
+					</section>
+					<section id="prop_of_L_and_L">
+						<h3>The normalized graph Laplacians</h3>
+						<h4>Properties of $L_{sym}$ and $L_{rw}$ - continue</h4>
+						<ol start="4">
+							<li class="fragment">
+								$0$ is an eignevalue of $L_{rw}$ with the constant one vector $\mathbb{1}$ as eigenvector. $0$ is an eigenvalue of $L_{sym}$ with eigenvector $D^{1/2}\mathbb{1}$.
+							</li>
+							<li class="fragment">
+								$L_{sym}$ and $L_{rw}$ are positive semi-definite and have $n$ non-negative real-valued eigenvalues $0=\lambda_1\leq\lambda_2\leq\cdot\cdot\cdot\leq\lambda_n$.
+							</li>
+						</ol>
+						<br />
+						<br />
+						<small class="fragment">The <i>proof</i> of the 5 properties can be found in the appendix <a href="#proof3">here</a>.</small>
+					</section>
+					<section id="spectrum_of_L_and_L">
+						<h3>The normalized Graph Laplacians</h3>
+						<h4>Number of connected components, the spectrum of $L_{sym}$ & $L_{rw}$</h4>
+						<p>Let $G$ be an undirected graph with non-negative weights. Then the multiplicity $k$ of the eigenvalue $0$ of both $L_{rw}$ and $L_{sym}$ equals the number of connected components $A_1,...,A_k$ in the graph. <br />For $L_{rw}$, the eigenspace of $0$ is spanned by the indicator vectors $\mathbb{1}_{A_1},...,\mathbb{1}_{A_k}$ of those components. <br />For $L_{sym}$, the eigenspace of $0$ is spanned by the vectors $D^{1/2}\mathbb{1}_{A_i}$.</p>
+						<br />
+						<br />
+						<small class="fragment">The <i>proof</i> can be found in the appendix <a href="#proof4">here</a>.</small>
+					</section>
 				</section>
 
+
+				<section>
+					<section>
+						<h3>Appendices</h3>
+					</section>
+					<section id="proof1">
+						<h3>Proof of the unnormalized graph Laplacian Properties</h3>
+						<a href="#unnormalized_lapl">back</a>
+					</section>
+					<section id="proof2">
+						<h3>Proof of the spectrum of L</h3>
+						<a href="#spectrum_of_L">back</a>
+					</section>
+					<section id="proof3">
+						<h3>Proof of the properties of L and L</h3>
+						<a href="#prop_of_L_and_L">back</a>
+					</section>
+					<section id="proof4">
+						<h3>Proof of the spectrum of L and L</h3>
+						<a href="#spectrum_of_L_and_L">back</a>
+					</section>
+				</section>
 			</div>
 
 		</div>
