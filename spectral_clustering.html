@@ -333,8 +333,75 @@
 						<small class="fragment">The <i>proof</i> can be found in the appendix <a href="#proof4">here</a>.</small>
 					</section>
 				</section>
-
-
+				<section>
+					<section>
+						<h3>Spectral Clustering Algorithms</h3>
+					</section>
+					<section>
+						<h3>Spectral Clustering Algorithms</h3>
+						<p>In this part we going to see the most common spectral clustering algorithms.</p>
+						<p class="fragment">Some assumptions before we start:</p>
+						<ol>
+							<li class="fragment">Our data consists of $n$ "points" $x_1,...,x_n$ which can be arbitrary objects.</li>
+							<li class="fragment">The pairwise similarities $s_{ij}=s(x_i,x_j)$ is defined by some similarity function that is symmetric and non-negative.</li>
+							<li class="fragment">The similarity matrix is defined as $S=(s_{ij})_{i,j=1,...,n}$</li>
+							<li class="fragment">As mentioned before, there is no info about which way of constructing similarity graph is better. So the method of construction is (for now) not an issue.</li>
+						</ol>
+					</section>
+					<section>
+						<h3>Unnormalized spectral clustering algorithm</h3>
+						<p><strong>Input:</strong> Similarity matrix $S \in \mathbb{R}^{n\times n}$, $k$ of clusters to construct.</p>
+						<ul style="font-size: 30px;">
+							<li class="fragment">Construct a similarity graph, get $W$ - its weighted adjacency matrix.</li>
+							<li class="fragment">Compute the unnormalized Laplacian $L$.</li>
+							<li class="fragment"><strong>Compute the first $k$ eigenvectors $u_1,...,u_k$ of $L$.</strong></li>
+							<li class="fragment">Let $U \in \mathbb{R}^{n \times k}$ be the matrix with the vectors $u_1,...,u_k$ as columns.</li>
+							<li class="fragment">For $i=1,...,n$, let $y_i \in \mathbb{R}^k$ be the $i$-th vector row of $U$.</li>
+							<li class="fragment">Cluster the points $(y_i)_{i=1,...,n} \in \mathbb{R}^k$ with the $k$-means algorithm into clusters $C_1,...,C_k$.</li>
+						</ul>
+						<p class="fragment"><strong>Output:</strong> Clusters $A_1,...,A_k$ with $A_i=\{j \mid y_j \in C_j\}$</p>
+					</section>
+					<section>
+						<h3>Normalized spectral clustering algorithm</h3>
+						<h6>By $L_{rw}$, according to <i>Shi and Malik (2000)</i></h6>
+						<p><strong>Input:</strong> Similarity matrix $S \in \mathbb{R}^{n\times n}$, $k$ of clusters to construct.</p>
+						<ul style="font-size: 30px;">
+							<li class="fragment">Construct a similarity graph, get $W$ - its weighted adjacency matrix.</li>
+							<li class="fragment">Compute the unnormalized Laplacian $L$.</li>
+							<li class="fragment"><strong>Compute the first $k$ generalized eigenvectors $u_1,...,u_k$ of the generalized eigenproblem $Lu=\lambda Du$.</strong></li>
+							<li class="fragment">Let $U \in \mathbb{R}^{n \times k}$ be the matrix with the vectors $u_1,...,u_k$ as columns.</li>
+							<li class="fragment">For $i=1,...,n$, let $y_i \in \mathbb{R}^k$ be the $i$-th vector row of $U$.</li>
+							<li class="fragment">Cluster the points $(y_i)_{i=1,...,n} \in \mathbb{R}^k$ with the $k$-means algorithm into clusters $C_1,...,C_k$.</li>
+						</ul>
+						<p class="fragment"><strong>Output:</strong> Clusters $A_1,...,A_k$ with $A_i=\{j \mid y_j \in C_j\}$</p>
+					</section>
+					<section>
+						<h3>Normalized spectral clustering algorithm</h3>
+						<h6>By $L_{sym}$, according to <i>Ng, Jordan and Weiss (2002)</i></h6>
+						<p><strong>Input:</strong> Similarity matrix $S \in \mathbb{R}^{n\times n}$, $k$ of clusters to construct.</p>
+						<ul style="font-size: 30px;">
+							<li class="fragment">Construct a similarity graph, get $W$ - its weighted adjacency matrix.</li>
+							<li class="fragment">Compute the normalized Laplacian $L_{sym}$.</li>
+							<li class="fragment"><strong>Compute the first $k$ eigenvectors $u_1,...,u_k$ of $L_{sym}$.</strong></li>
+							<li class="fragment">Let $U \in \mathbb{R}^{n \times k}$ be the matrix with the vectors $u_1,...,u_k$ as columns.</li>
+							<li class="fragment"><strong>Form the matrix $T \in \mathbb{R}^{n \times k}$ from $U$ by normalizing the rows to norm 1: $t_{ij}=u_{ij}/(\sum_ku_{ik}^2)^{1/2}$.</strong></li>
+							<li class="fragment">For $i=1,...,n$, let $y_i \in \mathbb{R}^k$ be the $i$-th vector row of $T$.</li>
+							<li class="fragment">Cluster the points $(y_i)_{i=1,...,n} \in \mathbb{R}^k$ with the $k$-means algorithm into clusters $C_1,...,C_k$.</li>
+						</ul>
+						<p class="fragment"><strong>Output:</strong> Clusters $A_1,...,A_k$ with $A_i=\{j \mid y_j \in C_j\}$</p>
+					</section>
+					<section>
+						<h3>spectral Clustering Algorithm</h3>
+						<h4>Some notions:</h4>
+						<ul>
+							<li class="fragment">All three algorithms looks rather similar, apart from the fact that they use three different graph Laplacians.</li>
+							<li class="fragment">The main trick in all three is to change the representation of the abstract data points $x_i$ to points $y_i \in \mathbb{R}^k$.</li>
+							<li class="fragment">Due to the properties of the graph Laplacians, this change of representation is useful.</li>
+							<li class="fragment">That change of representation of the points enhances the cluster-properties in the data - making the detection of clusters trivial task.</li>
+							<li class="fragment">In our algorithms, we did it with the simple $k$-means clustering algorithm - with no difficulties.</li>
+						</ul>
+					</section>
+				</section>
 				<section>
 					<section>
 						<h3>Appendices</h3>
