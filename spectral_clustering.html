@@ -405,6 +405,66 @@
 					<section>
 						<h3>Graph cut point of view</h3>
 					</section>
+					<section>
+						<h3>Graph cut point of view</h3>
+						<p>As we know, clustering is to seperate points in different groups according to their similarities.</p>
+						<p class="fragment">If the data is given in form of a similarity graph, we can restate the clustering problem as <i>graph partitioning</i> problem, such that the edges between different groups of the graph have a very low weight, and the edges within a group have high weight.</p>
+					</section>
+					<section>
+						<h3>Graph cut point of view - mincut</h3>
+						<p>The simplest and most direct way to construct a partition of a graph is to solve the <strong>mincut</strong> problem: For a given number $k$ of subsets - choose a partition $A_1,...,A_k$ that minimizes
+						\[
+							\mbox{cut}(A_1,...,A_k):=\frac{1}{2}\sum_{i=1}^kW(A_i,\bar{A_i})
+							\]
+							<br />Here, we use the notation $W(A,B):=\sum_{i \in A,j \in B}w_{ij}$ that we seen before, and $\bar{A}$ for the complement of $A$.
+						</p>
+					</section>
+					<section>
+						<h3>Mincut - continue</h3>
+						<p>For $k=2$, mincut is relatively easy problem to solve, even efficiently. But, in practice, sometimes the result is not what we want: In many cases, mincut simply separates one individual vertex from the rest.</p>
+						<p class="fragment">One way to solve it, is to explicitly request that the sets $A_1,...,A_k$ are "reasonably large".</p>
+						<p class="fragment">The two most common functions to encode this are RatioCut and the normalized cut Ncut.</p>
+					</section>
+					<section>
+						<h3>RatioCut & Ncut - continue</h3>
+						<p>
+							\[
+							\mbox{RatioCut}(A_1,...,A_k):=\frac{1}{2}\sum_{i=1}^k\frac{W(A_i,\bar{A_i})}{|A_i|}=\sum_{i=1}^k\frac{\mbox{cut}(A_i,\bar{A_i})}{|A_i|} \\
+							\mbox{Ncut}(A_1,...,A_k):=\frac{1}{2}\sum_{i=1}^k\frac{W(A_i,\bar{A_i})}{\mbox{vol}(A)}=\sum_{i=1}^k\frac{\mbox{cut}(A_i,\bar{A_i})}{\mbox{vol}(A)}
+							\]
+						</p>
+						<p class="fragment">The difference between RatioCut and Ncut is how they defined the size of a subset $A_i$: <br />RatioCut define it as the the number of vertices in $A_i$: $|A_i|$.<br />Ncut define it as the weights of the edges in $A_i$: $\mbox{vol}(A)$.</p>
+					</section>
+					<section>
+						<h3>RatioCut & Ncut - continue</h3>
+						<p>As easily seen in the formulas of RatioCut and Ncut, both of them are minimized if the respective sizes of the clusters $A_i$ are large "together", or in other words - balanced.</p>
+						<p class="fragment">This added condition (balanced clusters) makes the previously simple problem to solve now a NP hard.</p>
+						<p class="fragment">Spectral clustering is a way to solve relaxed versions of those problems.</p>
+					</section>
+					<section>
+						<h3>Approximating RatioCut for $k=2$</h3>
+						<p>Our goal is to solve the optimization problem $\min_{A\subset V}{\mbox{RatioCut}(A,\bar{A})}$. Lets rewrite the problem in a more convenient way.</p>
+						<p class="fragment">For given subset $A \subset V$ we defined $f=(f_1,...,f_n)'\in \mathbb{R}^n$ such that:
+						\[
+							f_i=
+							\left\{
+							\begin{array}{ll}
+							\sqrt{|\bar{A}|/|A|}  & \mbox{if } v_i \in A \\
+							-\sqrt{|A|/|\bar{A}|}  & \mbox{if } v_i \in \bar{A}
+							\end{array}
+							\right.
+						\]</p>
+					</section>
+					<section>
+						<h3>Apprx. RatioCut for $k=2$ - continue</h3>
+						<p>Now we can rewrite the RatioCut function with the unnormalized graph Laplacian:</p>
+						<small>\[
+						f'Lf=\frac{1}{2}\sum_{i,j=1}^nw_{ij}(f_i-f_j)^2 \\
+						=\frac{1}{2}\sum_{i\in A,j\in \bar{A}}w_{ij}\Bigg(\sqrt{\frac{\bar{A}}{A}}+\sqrt{\frac{A}{\bar{A}}}\Bigg)^2 +
+						\frac{1}{2}\sum_{i\in \bar{A},j\in A}w_{ij}\Bigg(-\sqrt{\frac{\bar{A}}{A}}-\sqrt{\frac{A}{\bar{A}}}\Bigg)^2 \\
+						=\mbox{cut}(A,\bar{A})
+						\]</small>
+					</section>
 				</section>
 				<section>
 					<section>
