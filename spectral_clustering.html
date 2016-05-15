@@ -152,7 +152,7 @@
 										$|A| := \#\{v_i \in A\}$ (number of vertices in $A$).
 									</li>
 									<li class="fragment">
-										$vol(A) := \sum_{i \in A}d_i$
+										$\mbox{vol}(A) := \sum_{i \in A}d_i$
 										(Summing over the weights of all the edges attached to vertices in $A$).
 									</li>
 								</ol>
@@ -471,13 +471,13 @@
 						\]</p>
 						<p class="fragment">Altogether the problem of minimizing $(1)$ can be rewritten as :
 							<br />\[
-							\mbox{min}_{A \subset V}f'Lf \mbox{ s.t. } f\perp \mathbb{1},f_i \mbox{ as defined in Eq. }(2), \|f\|=\sqrt{n} \tag{3}
+							\mbox{min}_{A \subset V}f'Lf \;\;\mbox{s.t.}\;\; f\perp \mathbb{1},f_i \;\;\mbox{as defined in Eq.}\;(2), \|f\|=\sqrt{n} \tag{3}
 						\]</p>
 						<p class="fragment">This is a discrete optimization problem ($f$ entries only allowed to take two particular values) and of course it is still NP hard. The most obvious relaxation in this setting is to allow that $f_i$ takes any value in $\mathbb{R}$.</p>
 						<p class="fragment">So we get the following relaxed optimization problem:
 						<br />
 							\[
-							\mbox{min}_{f \in \mathbb{R}^n}f'Lf \mbox{ s.t. } f\perp \mathbb{1}, \|f\|=\sqrt{n} \tag{4}
+							\mbox{min}_{f \in \mathbb{R}^n}f'Lf \;\;\mbox{s.t.}\;\; f\perp \mathbb{1}, \|f\|=\sqrt{n} \tag{4}
 							\]
 						</p>
 					</section>
@@ -536,14 +536,82 @@
 					</section>
 					<section>
 						<h3>Approximating RatioCut for any $k$ - cont.</h3>
-						<p>So now we can rewrite the problem of minimizing $\mbox{RatioCut}(A_1,...,A_k)$ as: <br />
+						<p>So now we can rewrite the problem of minimizing $\mbox{RatioCut}(A_1,...,A_k)$ as: <br /><br />
 						\[
-							\mbox{min}_{A_1,...,A_k} \mbox{ Tr}(H'LH) \mbox{ s.t. } H'H=I, H \mbox{ as defined in Eq. } (5)
+							\mbox{min}_{A_1,...,A_k} \mbox{ Tr}(H'LH) \;\;\mbox{s.t.}\;\; H'H=I, H \;\;\mbox{as defined in Eq.}\; (5)
 						\]</p>
 						<p class="fragment">Same as the $k=2$ case, we can relax the problem by allowing it to get real-values entries, and: <br />
 						\[
-							\mbox{min}_{H \in \mathbb{R}^{n \times k}} \mbox{ Tr}(H'LH) \mbox{ s.t. } H'H=I
+							\mbox{min}_{H \in \mathbb{R}^{n \times k}} \mbox{ Tr}(H'LH) \;\;\mbox{s.t.}\;\; H'H=I
 						\]</p>
+						<p class="fragment">Again, we need to re-convert the real valued solution matrix into a discrete partition.</p>
+						<br />
+						<p class="fragment">We can see that the matrix $H$ is in fact the matrix $U$ used in the unnormalized spectral clustering algorithm. As in the $k=2$ case, we now use the $k$-means method on the rows of $U=H$.</p>
+					</section>
+					<section>
+						<h3>Approximating Ncut</h3>
+						<p>The process for Ncut is quiet similar to the one we did for RatioCut.</p>
+						<p class="fragment">In the case $k=2$, we define the cluster indicator vector $f$ by:
+						<br />
+						\[
+							f_i=
+							\left\{
+							\begin{array}{ll}
+							\sqrt{\frac{\mbox{vol}(\bar{A})}{\mbox{vol}(A)}} & \mbox{if } v_i \in A \\
+							-\sqrt{\frac{\mbox{vol}(A)}{\mbox{vol}(\bar{A})}}  & \mbox{if } v_i \in \bar{A}
+							\end{array}
+							\right.
+							\tag{6}
+						\]</p>
+						<p class="fragment">As before, $(Df)'\mathbb{1}=0,f'Df=\mbox{vol}(V), \mbox{ and } f'Lf=\mbox{vol}(V)\mbox{Ncut}(A,\bar{A})$.</p>
+						<p class="fragment">So minimizing Ncut problem can be rewritten as:
+						<br />
+						\[
+							\mbox{min}_Af'Lf \;\;\mbox{s.t.}\;\; f \;\;\mbox{as in}\;\; (6), Df \perp \mathbb{1}, f'Df=\mbox{vol}(V). \tag{7}
+						\]</p>
+						<p class="fragment">Again, relax the problem to allow real values:
+						<br />
+						\[
+						\mbox{min}_{f \in \mathbb{R}^n}f'Lf \;\;\mbox{s.t.}\;\; Df \perp \mathbb{1}, f'Df=\mbox{vol}(V). \tag{8}
+						\]</p>
+					</section>
+					<section>
+						<h3>Approximating Ncut - cont. ($k=2$)</h3>
+						<p>Now we substitute $g:=D^{1/2}f$:<br />
+							\[
+							\mbox{min}_{g \in \mathbb{R}^n}g'\underbrace{D^{-1/2}LD^{-1/2}}_{=L_{sym}}g\;\;\mbox{s.t.}\;g\perp D^{1/2}\mathbb{1},\;\|g\|^2=\underbrace{\mbox{vol}(V)}_{=\mbox{const}}. \tag{9}
+							\]</p>
+						<p class="fragment">Also notice that $D^{1/2}\mathbb{1}$ is the first eigenvector of $L_{sym}$. Then, problem $(9)$ is in the form of Rayleigh-Ritz theorem, thus the solution is given by the 2nd eigenvector of $L_{sym}$.</p>
+						<p class="fragment">Re-substituting $f=D^{-1/2}g$ and using <a href="#prop_of_L_and_L_0">the properties of $L_{sym}$</a> we see that $f$ is the 2nd eigenvector of $L_{rw}$, or the equivalently generalized eigenvector of $Lu=\lambda Du$.</p>
+					</section>
+					<section>
+						<h3>Approximating Ncut for any $k$</h3>
+						<p>For $k>2$, we defined the indicator vectors $h_j=(h_{1,j},...,h_{n,j})'$ by
+							<br />
+							\[
+							h_{i,j}=
+							\left\{
+							\begin{array}{ll}
+							1/\sqrt{\mbox{vol}(A_j)} & \mbox{if } v_i \in A_j \\
+							0 & \mbox{otherwise}
+							\end{array}
+							\right.
+							\quad
+							\quad
+							(i=1,...,n;j=1,...,k)
+							\tag{10}
+							\]</p>
+						<p class="fragment">Then we set the matrix $H \in \mathbb{R}^{n \times k}$ such that its columns are $h_{i,j}$. Also - $H'H=I, h'_iDh_i=\mathbb{1}, h'_iLh_i=\mbox{cut}(A_i,\bar{A_i})/\mbox{vol}(A_i)$. So we get:
+							<br />
+							\[
+							\mbox{min}_{A_1,...,A_k} \mbox{ Tr}(H'LH) \;\;\mbox{s.t.}\;\; H'DH=I, H \;\;\mbox{as in Eq.}\; (10)
+							\]</p>
+						<p class="fragment">Realxing the discreteness condition and substituting $T=D^{1/2}H$   we get:<br />
+							\[
+							\mbox{min}_{T \in \mathbb{R}^{n \times k}} \mbox{ Tr}(T'D^{-1/2}LD^{-1/2}T) \;\;\mbox{s.t.}\;\; T'T=I
+							\]</p>
+						<p class="fragment">Re-substituting $H=D^{-1/2}T$ we see that the solution $H$ consists of the first $k$ eigenvectors of $L_{rw}$, or of $Lu=\lambda Du$.</p>
+						<p class="fragment">This yields the normalized spectral clustering algorithm by $L_{rw}$.</p>
 					</section>
 				</section>
 				<section>
