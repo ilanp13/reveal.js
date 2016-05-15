@@ -173,7 +173,7 @@
 							</li>
 						</ul>
 					</section>
-					<section>
+					<section id="graph_types">
 						<h3>Types of similarity graphs</h3>
 						<p>We'll mention the popular constructions to transform our data points into graph:</p>
 						<ul>
@@ -403,6 +403,116 @@
 				</section>
 				<section>
 					<section>
+						<h3>Practical Details</h3>
+					</section>
+					<section>
+						<h3>Practical Details</h3>
+						<p>So, we want to implement spectral clustering.</p>
+						<p class="fragment">There are some points to think of, some decisions to make, some parameters to set.<br />We will discuss them now.</p>
+					</section>
+					<section>
+						<h3>Constructing the similarity graph</h3>
+						<p>Constructing the similarity graph for spectral clustering is not a trivial task, and little is known on theoretical implications of the different constructions.</p>
+						<p class="fragment">First, we need to decide which <strong>similarity function</strong> to use. Obviously, we need to choose a function that will have some meaning for our data points - that the function will give high similarity to points from same group, and the opposite.</p>
+						<p class="fragment">More over, the global "long-range" behavior of the similarity function is not so important - two points won't be connected whether they have similarity of $0.01$ or $0.001$.</p>
+					</section>
+					<section>
+						<h3>Constructing the similarity graph - cont.</h3>
+						<p>Usually, when the data points live in the Euclidean space $\mathbb{R}^d$, we'll take the Gaussian similarity function:
+							\[
+							s(x_i,x_j)=e^{{-\|x_i-x_j\|^2}/{2\sigma^2}}
+							\]</p>
+						<p class="fragment">If we conclude this, the choice of the similarity function depends on the domain the data comes from. There are no general advices that can be given.</p>
+					</section>
+					<section>
+						<h3>Which type of similarity graph</h3>
+						<p>We mentioned <a href="#graph_types">earlier</a> 3 different types of similarity graphs.</p>
+						<p class="fragment">Later on we will view a toy example, which then we will discuss the different types of graphs and their properties.</p>
+						<p class="fragment">As a spoiler of the conclusion their, it's generally recommended to work with the $k$-nearest neighbor graph as a first choice:</p>
+						<ul>
+							<li class="fragment">It's simple to work with.</li>
+							<li class="fragment">As a result we get a sparse adjacency matrix $W$.</li>
+							<li class="fragment">Among the grpahs it is the least vulnerable to unsuitable choices of parameters.</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Parameters of similarity graph</h3>
+						<p>How to choose the $k$ or $\epsilon$ parameters wisely? Not an easy task, specially when barely any theoretical results are known to guide us.</p>
+						<p class="fragment">All the results of how connectivity of random graphs can be achieved holds only in the case when $\mbox{lim}|V| \to \infty$. All those results don't really help us for choosing in case of finite $|V|$.</p>
+						<p class="fragment">In general, if the similarity graph contains more connected components than the number of clusters we want to detect, then the algorithm will return connected components as clusters. which is not always the wanted result.</p>
+					</section>
+					<section>
+						<h3>Parameters of similarity graph - cont.</h3>
+						<p>So, when building the similarity graph, we need to make sure that the graph is connected, or that the number of connected components or isolated vertices is much smaller than the number of clusters we want to get.</p>
+						<p class="fragment">If the graph is small or medium-sized, this can be tried out "by foot". For larger graphs, it depends on the graph:</p>
+						<ul>
+							<li class="fragment">$k$-nearest neighbor graph - the first approximation could be to choose $k$ in the order of $\mbox{log}(n)$.</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Parameters of similarity graph - cont.</h3>
+						<ul>
+							<li>Mutual $k$-nearest neighbor graph - tricky task. This graph obviously has less edges than it's not-mutual brother - which causes the graph to have more connected components or more isolated vertices. Not so good. So our general goal will be to choose $k$ really high. But there are no records on how to do it efficiently.</li>
+							<li class="fragment">The $\epsilon$-neighborhood graph - We need to choose $\epsilon$ as the length of the longest edge in a minimal spanning tree of the fully connected graph (Which can be determined by any minimal spanning tree algorithm). However, in case the data contains outliers, or in case the data contains several tight clusters which are very far apart from each other, our $\epsilon$ will be too large to work with.</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Parameters of similarity graph - cont.</h3>
+						<ul>
+							<li>Fully connected graph - if used with a similarity function (like the Gaussian), then the scale of the function should be chosen such that it returns a graph with similar properties as a corresponding $k$ or $\epsilon$ graph would have.</li>
+							<li class="fragment">Also, we need to make sure that for most of the data points, the similarity values the function return are not "too small" or "too high".</li>
+							<li class="fragment">Specifically for the Gaussian: We can choose $\sigma$ in the order of the mean distance of a point to its $k$-th nearest neighbor (when $k \sim \mbox{log}(n)+1$, as described before). Other way, set $\epsilon$ as before, and then choose $\sigma = \epsilon$.</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Parameters of similarity graph - cont.</h3>
+						<ul>
+							<li>To summerize the choice of parameters - all the given rules are nice, but nothing is certain. It stays quite a sensitive task in spectral clustering to choose the parameters, and what can work for one set of data points, can fail ultimately for other.</li>
+							<li class="fragment">Finding rules which have a theoretical justification should be considered an interesting and important topic for future researches.</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Computing th eigenvectors</h3>
+						<p>One of the steps of the algorithm is to compute the first $k$ eigenvectors of a potentially large graph Laplacian matrix.</p>
+						<p class="fragment">Luckily, using the $k$-nearest or the $\epsilon$-neighborhood graphs, we get sparse matrices.</p>
+						<p class="fragment">There exist efficient methods to compute the first eigenvectors of sparse matrices, like the <i>power method</i> or <i>Krylov subspace</i> methods such as the <i>Lanczos</i> method.</p>
+						<p class="fragment">The speed of convergence of those algorithms depends on the size of the eigengap (also called spectral gap): $\gamma_k=|\lambda_k-\lambda_{k+1}|$.</p>
+						<p class="fragment">Larger eigengap value means faster convergence.</p>
+					</section>
+					<section>
+						<h3>Computing th eigenvectors - cont.</h3>
+						<p>A problem can occur if one of the $k$ first eigenvalues has multiplicity larger than $1$. For example, in the ideal situation of $k$ disconnected clusters, the eigenvalue $0$ has multiplicity $k$. In that case - the eigenspace is spanned by the $k$ cluster indicator vectors.<br />
+						But unfortunately, the vectors computed by the eigensolvers do not necessarily converge to those vectors. They just converge to some orthonormal basis of the eigenspace, the base depends on the implementation details.</p>
+					</section>
+					<section>
+						<h3>Computing th eigenvectors - cont.</h3>
+						<p>But, all vectors in the space spanned by the cluster indicator vectors $\mathbb{1}_{A_i}$ have the form $u=\sum_{i=1}^ka_i\mathbb{1}_{A_i}$ for some coefficients $a_i$, so they are piecewise constant on the clusters.</p>
+						<p class="fragment">So the vectors returned by the eigensolvers still contain the wanted data about the clusters, which is needed for the $k$-means algorithm to reconstruct the clusters.</p>
+					</section>
+					<section>
+						<h3>The number of clusters</h3>
+						<p>Choosing the number $k$ of clusters is a general problem for all clustering algorithms, and as such there are lots of methods to solve it. All of those methods are suitable for spectral clustering.</p>
+						<p class="fragment">There is one tool which is particularly designed for spectral clustering: <i>eigengap heuristic</i>. It can be used for all three graph Laplacians. The goal is to choose the number $k$ such that all eigenvalues $\lambda_1,...,\lambda_k$ are very small, but $\lambda_{k+1}$ is relatively large.</p>
+					</section>
+					<section>
+						<h3>The number of clusters - cont.</h3>
+						<p>There are several justifications for this procedure:</p>
+						<ul>
+							<li class="fragment">Based on perturbation theory, we observe that in the ideal case of $k$ completely disconnected clusters, the eigenvalue $0$ has multiplicity $k$, and then there is a gap to the $(k+1)$th eigenvalue $\lambda_{k+1}>0$.</li>
+							<li class="fragment">Based on spectral graph theory, many geometric invariants of the graph can be expressed or bounded with the help of the first eigenvalues of the graph Laplacian. In particular, the sizes of cuts are closely related to the size of the first eigenvalues.</li>
+						</ul>
+					</section>
+					<section>
+						<h3>The number of clusters - cont.</h3>
+						<p></p>
+					</section>
+				</section>
+				<section>
+					<h3>Appendices</h3>
+				</section>
+
+				<section>
+					<section>
 						<h3>Graph cut point of view</h3>
 					</section>
 					<section>
@@ -413,7 +523,7 @@
 					<section>
 						<h3>Graph cut point of view - mincut</h3>
 						<p>The simplest and most direct way to construct a partition of a graph is to solve the <strong>mincut</strong> problem: For a given number $k$ of subsets - choose a partition $A_1,...,A_k$ that minimizes
-						\[
+							\[
 							\mbox{cut}(A_1,...,A_k):=\frac{1}{2}\sum_{i=1}^kW(A_i,\bar{A_i})
 							\]
 							<br />Here, we use the notation $W(A,B):=\sum_{i \in A,j \in B}w_{ij}$ that we seen before, and $\bar{A}$ for the complement of $A$.
@@ -445,7 +555,7 @@
 						<h3>Approximating RatioCut for $k=2$</h3>
 						<p>Our goal is to solve the optimization problem $\min_{A\subset V}{\mbox{RatioCut}(A,\bar{A})}$. Lets rewrite the problem in a more convenient way.</p>
 						<p class="fragment">For given subset $A \subset V$ we defined $f=(f_1,...,f_n)'\in \mathbb{R}^n$ such that:
-						\[
+							\[
 							f_i=
 							\left\{
 							\begin{array}{ll}
@@ -453,28 +563,23 @@
 							-\sqrt{|A|/|\bar{A}|}  & \mbox{if } v_i \in \bar{A}
 							\end{array}
 							\right.
-						\]</p>
+							\]</p>
 					</section>
 					<section>
 						<h3>Apprx. RatioCut for $k=2$ - continue</h3>
 						<p>Now we can rewrite the RatioCut function with the unnormalized graph Laplacian:</p>
 						<small>\[
-						f'Lf=\frac{1}{2}\sum_{i,j=1}^nw_{ij}(f_i-f_j)^2 \\
-						=\frac{1}{2}\sum_{i\in A,j\in \bar{A}}w_{ij}\Bigg(\sqrt{\frac{\bar{A}}{A}}+\sqrt{\frac{A}{\bar{A}}}\Bigg)^2 +
-						\frac{1}{2}\sum_{i\in \bar{A},j\in A}w_{ij}\Bigg(-\sqrt{\frac{\bar{A}}{A}}-\sqrt{\frac{A}{\bar{A}}}\Bigg)^2 \\
-						=\mbox{cut}(A,\bar{A})\Bigg(\frac{|\bar{A}|}{|A|}+\frac{|A|}{|\bar{A}|}+2\Bigg)\\
+							f'Lf=\frac{1}{2}\sum_{i,j=1}^nw_{ij}(f_i-f_j)^2 \\
+							=\frac{1}{2}\sum_{i\in A,j\in \bar{A}}w_{ij}\Bigg(\sqrt{\frac{\bar{A}}{A}}+\sqrt{\frac{A}{\bar{A}}}\Bigg)^2 +
+							\frac{1}{2}\sum_{i\in \bar{A},j\in A}w_{ij}\Bigg(-\sqrt{\frac{\bar{A}}{A}}-\sqrt{\frac{A}{\bar{A}}}\Bigg)^2 \\
+							=\mbox{cut}(A,\bar{A})\Bigg(\frac{|\bar{A}|}{|A|}+\frac{|A|}{|\bar{A}|}+2\Bigg)\\
 							=\cdot\cdot\cdot=|V|\cdot\mbox{RatioCut}(A,\bar{A})
-						\]</small>
+							\]</small>
 					</section>
 				</section>
 				<section>
 					<section>
-						<h3>toy example - starts in pages 8-9</h3>
-					</section>
-				</section>
-				<section>
-					<section>
-						<h3>Appendices</h3>
+						<h3>Mathematical Proofs</h3>
 					</section>
 					<section id="proof1">
 						<h3>Proof of the unnormalized graph Laplacian Properties</h3>
