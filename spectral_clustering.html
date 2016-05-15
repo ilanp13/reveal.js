@@ -90,7 +90,7 @@
 						</ul>
 					</section>
 					<section>
-						<h3>Similarity Graphs - continue</h3>
+						<h3>Similarity Graphs - cont.</h3>
 						<p>So now we can reformulate the problem of clustering to the problem of finding a partition of the graph $G$ such that the edges between the different groups in the partition have very low (if at all) weights, and the weights of edges inside a group have a very high weights.</p>
 					</section>
 					<section>
@@ -143,7 +143,7 @@
 						</ul>
 					</section>
 					<section>
-						<h3>Some graph partition notations - continue</h3>
+						<h3>Some graph partition notations - cont.</h3>
 						<ul>
 							<li>
 								There are two options to measure the "size" of subset $A \subset V $ :
@@ -194,9 +194,9 @@
 						</ul>
 					</section>
 					<section>
-						<h3>Types of similarity graphs - continue</h3>
+						<h3>Types of similarity graphs - cont.</h3>
 						<ul>
-							<li class="fragment">
+							<li>
 								<strong>The fully connected graph:</strong> Connect all points with positive similarity between them, which is the weight of the edge. This type is only useful if the similarity function itself models local neighborhoods. As example we can take the Gaussian similarity function:
 								\[
 								s(x_i,x_j)=e^{{-\|x_i-x_j\|^2}/{2\sigma^2}}
@@ -204,7 +204,7 @@
 								where $\sigma$ controls the width of the neighborhood (similar to the $\epsilon$ before).
 							</li>
 						</ul>
-						<p>All this graphs are used in spectral clustering. There is no info on how the choice of method influence the results.</p>
+						<p class="fragment">All this graphs are used in spectral clustering. There is no info on how the choice of method influence the results.</p>
 					</section>
 				</section>
 				<section>
@@ -216,7 +216,7 @@
 						<h3>Graph Laplacians</h3>
 						<p>As we mentioned earlier, the concept of Spectral Clustering is coming from the field of <i>spectral graph theory</i>, in which graph Laplacians matrices are the primary tool. So they will be primary tool in spectral clustering as well.</p>
 						<p>We are now going to define the graph Laplacians and mention their most important properties.</p>
-						<small>Note: There is no unique convention which matrix exactly is called "graph Laplacians". <br />Mostly, every author gives is own version of it.</small>
+						<p>Note: There is no unique convention which matrix exactly is called "graph Laplacians". <br />Mostly, every author gives is own version of it.</p>
 					</section>
 					<section>
 						<h3>Graph Laplacians</h3>
@@ -245,7 +245,7 @@
 						</p>
 						<br />
 						<br />
-						<small class="fragment">Note: self edges, which "sits" on the diagonal of the adjacency matrix $W$, do not change the graph Laplacians.</small>
+						<p class="fragment">Note: self edges, which "sits" on the diagonal of the adjacency matrix $W$, do not change the graph Laplacians.</p>
 					</section>
 					<section id="unnormalized_lapl">
 						<h3>Unnormalized Graph Laplacians</h3>
@@ -267,7 +267,7 @@
 						</ol>
 						<br />
 						<br />
-						<small class="fragment">The <i>proof</i> of the 4 properties can be found in the appendix <a href="#proof1">here</a>.</small>
+						<p class="fragment">The <i>proof</i> of the 4 properties can be found in the appendix <a href="#proof1">here</a>.</p>
 					</section>
 					<section id="spectrum_of_L">
 						<h3>Unnormalized Graph Laplacians</h3>
@@ -275,7 +275,7 @@
 						<p>Let $G$ be an undirected graph with non-negative weights. Then the multiplicity $k$ of the eigenvalue $0$ of $L$ equals the number of connected components $A_1,...,A_k$ in the graph. The eigenspace of eigenvalue $0$ is spanned by the indicator vectors $\mathbb{1}_{A_1},...,\mathbb{1}_{A_k}$ of those components.</p>
 						<br />
 						<br />
-						<small class="fragment">The <i>proof</i> can be found in the appendix <a href="#proof2">here</a>.</small>
+						<p class="fragment">The <i>proof</i> can be found in the appendix <a href="#proof2">here</a>.</p>
 					</section>
 					<section>
 						<h3>The normalized graph Laplacians</h3>
@@ -307,12 +307,6 @@
 							<li class="fragment">
 								$\lambda$ is an eigenvalue of $L_{rw}$ with eigenvector $u$ if and only if $\lambda$ and $u$ solve the generalized eigen-problem $Lu=\lambda Du$.
 							</li>
-						</ol>
-					</section>
-					<section id="prop_of_L_and_L">
-						<h3>The normalized graph Laplacians</h3>
-						<h4>Properties of $L_{sym}$ and $L_{rw}$ - continue</h4>
-						<ol start="4">
 							<li class="fragment">
 								$0$ is an eignevalue of $L_{rw}$ with the constant one vector $\mathbb{1}$ as eigenvector. $0$ is an eigenvalue of $L_{sym}$ with eigenvector $D^{1/2}\mathbb{1}$.
 							</li>
@@ -322,7 +316,7 @@
 						</ol>
 						<br />
 						<br />
-						<small class="fragment">The <i>proof</i> of the 5 properties can be found in the appendix <a href="#proof3">here</a>.</small>
+						<p class="fragment">The <i>proof</i> of the 5 properties can be found in the appendix <a href="#proof3">here</a>.</p>
 					</section>
 					<section id="spectrum_of_L_and_L">
 						<h3>The normalized Graph Laplacians</h3>
@@ -330,7 +324,7 @@
 						<p>Let $G$ be an undirected graph with non-negative weights. Then the multiplicity $k$ of the eigenvalue $0$ of both $L_{rw}$ and $L_{sym}$ equals the number of connected components $A_1,...,A_k$ in the graph. <br />For $L_{rw}$, the eigenspace of $0$ is spanned by the indicator vectors $\mathbb{1}_{A_1},...,\mathbb{1}_{A_k}$ of those components. <br />For $L_{sym}$, the eigenspace of $0$ is spanned by the vectors $D^{1/2}\mathbb{1}_{A_i}$.</p>
 						<br />
 						<br />
-						<small class="fragment">The <i>proof</i> can be found in the appendix <a href="#proof4">here</a>.</small>
+						<p class="fragment">The <i>proof</i> can be found in the appendix <a href="#proof4">here</a>.</p>
 					</section>
 				</section>
 				<section>
@@ -399,6 +393,157 @@
 							<li class="fragment">Due to the properties of the graph Laplacians, this change of representation of the points enhances the cluster-properties in the data - making the detection of clusters trivial task.</li>
 							<li class="fragment">In our algorithms, we did it with the simple $k$-means clustering algorithm - with no difficulties.</li>
 						</ul>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h3>Graph cut point of view</h3>
+					</section>
+					<section>
+						<h3>Graph cut point of view</h3>
+						<p>As we know, clustering is to seperate points in different groups according to their similarities.</p>
+						<p class="fragment">If the data is given in form of a similarity graph, we can restate the clustering problem as <i>graph partitioning</i> problem, such that the edges between different groups of the graph have a very low weight, and the edges within a group have high weight.</p>
+					</section>
+					<section>
+						<h3>Graph cut point of view - mincut</h3>
+						<p>The simplest and most direct way to construct a partition of a graph is to solve the <strong>mincut</strong> problem: For a given number $k$ of subsets - choose a partition $A_1,...,A_k$ that minimizes
+							\[
+							\mbox{cut}(A_1,...,A_k):=\frac{1}{2}\sum_{i=1}^kW(A_i,\bar{A_i})
+							\]
+							<br />Here, we use the notation $W(A,B):=\sum_{i \in A,j \in B}w_{ij}$ that we seen before, and $\bar{A}$ for the complement of $A$.
+						</p>
+					</section>
+					<section>
+						<h3>Mincut - cont.</h3>
+						<p>For $k=2$, mincut is relatively easy problem to solve, even efficiently. But, in practice, sometimes the result is not what we want: In many cases, mincut simply separates one individual vertex from the rest.</p>
+						<p class="fragment">One way to solve it, is to explicitly request that the sets $A_1,...,A_k$ are "reasonably large". The two most common functions to encode this are RatioCut and the normalized cut Ncut.</p>
+						<p class="fragment">
+							\[
+							\mbox{RatioCut}(A_1,...,A_k):=\frac{1}{2}\sum_{i=1}^k\frac{W(A_i,\bar{A_i})}{|A_i|}=\sum_{i=1}^k\frac{\mbox{cut}(A_i,\bar{A_i})}{|A_i|} \\
+							\mbox{Ncut}(A_1,...,A_k):=\frac{1}{2}\sum_{i=1}^k\frac{W(A_i,\bar{A_i})}{\mbox{vol}(A)}=\sum_{i=1}^k\frac{\mbox{cut}(A_i,\bar{A_i})}{\mbox{vol}(A)}
+							\]
+						</p>
+						<p class="fragment">The difference between RatioCut and Ncut is how they defined the size of a subset $A_i$: <br />RatioCut define it as the the number of vertices in $A_i$: $|A_i|$.<br />Ncut define it as the weights of the edges in $A_i$: $\mbox{vol}(A)$.</p>
+					</section>
+					<section>
+						<h3>RatioCut & Ncut - cont.</h3>
+						<p>As easily seen in the formulas of RatioCut and Ncut, both of them are minimized if the respective sizes of the clusters $A_i$ are large "together", or in other words - balanced.</p>
+						<p class="fragment">This added condition (balanced clusters) makes the previously simple problem to solve now a NP hard.</p>
+						<p class="fragment">Spectral clustering is a way to solve relaxed versions of those problems.</p>
+					</section>
+					<section>
+						<h3>Approximating RatioCut for $k=2$</h3>
+						<p>Our goal is to solve the optimization problem
+							\[
+							\min_{A\subset V}{\mbox{RatioCut}(A,\bar{A})} \tag{1}
+							\]</p>
+						<p class="fragment">We're going to try to write it in a better way. <br />For given subset $A \subset V$ we defined $f=(f_1,...,f_n)'\in \mathbb{R}^n$ such that:
+							<br /><br />\[
+							f_i=
+							\left\{
+							\begin{array}{ll}
+							\sqrt{|\bar{A}|/|A|}  & \mbox{if } v_i \in A \\
+							-\sqrt{|A|/|\bar{A}|}  & \mbox{if } v_i \in \bar{A}
+							\end{array}
+							\right.
+							\tag{2}
+							\]</p>
+						<p class="fragment">Now we can rewrite the RatioCut function with the unnormalized graph Laplacian:
+							\[
+							f'Lf=\frac{1}{2}\sum_{i,j=1}^nw_{ij}(f_i-f_j)^2
+							=\frac{1}{2}\sum_{i\in A,j\in \bar{A}}w_{ij}\Bigg(\sqrt{\frac{\bar{A}}{A}}+\sqrt{\frac{A}{\bar{A}}}\Bigg)^2 + \\
+							\frac{1}{2}\sum_{i\in \bar{A},j\in A}w_{ij}\Bigg(-\sqrt{\frac{\bar{A}}{A}}-\sqrt{\frac{A}{\bar{A}}}\Bigg)^2
+							=\mbox{cut}(A,\bar{A})\Bigg(\frac{|\bar{A}|}{|A|}+\frac{|A|}{|\bar{A}|}+2\Bigg)\\
+							=\cdot\cdot\cdot=|V|\cdot\mbox{RatioCut}(A,\bar{A})
+							\]</p>
+					</section>
+					<section>
+						<h3>Apprx. RatioCut for $k=2$ - cont.</h3>
+						<p>Additionally, we have
+							<br /><p>\[
+						\sum_{i=1}^nf_i=\sum_{i \in A}{\sqrt{\frac{|\bar{A}|}{|A|}}}-\sum_{i \in \bar{A}}{\sqrt{\frac{|A|}{|\bar{A}|}}}=|A|{\sqrt{\frac{|\bar{A}|}{|A|}}}-|\bar{A}|{\sqrt{\frac{|A|}{|\bar{A}|}}}=0
+							\]</p></p>
+						<p class="fragment">Means, the vector $f$ from Eq. $(2)$ is orthogonal to the vector $\mathbb{1}$. Finally, $f$ satisfies:
+							<br />
+							\[
+							\|f\|^2=\sum_{i=1}^nf_i^2=|A|\frac{|\bar{A}|}{|A|}+|\bar{A}|\frac{|A|}{|\bar{A}|}=|\bar{A}|+|A|=n
+						\]</p>
+						<p class="fragment">Altogether the problem of minimizing $(1)$ can be rewritten as :
+							<br />\[
+							\mbox{min}_{A \subset V}f'Lf \mbox{ s.t. } f\perp \mathbb{1},f_i \mbox{ as defined in Eq. }(2), \|f\|=\sqrt{n} \tag{3}
+						\]</p>
+						<p class="fragment">This is a discrete optimization problem ($f$ entries only allowed to take two particular values) and of course it is still NP hard. The most obvious relaxation in this setting is to allow that $f_i$ takes any value in $\mathbb{R}$.</p>
+						<p class="fragment">So we get the following relaxed optimization problem:
+						<br />
+							\[
+							\mbox{min}_{f \in \mathbb{R}^n}f'Lf \mbox{ s.t. } f\perp \mathbb{1}, \|f\|=\sqrt{n} \tag{4}
+							\]
+						</p>
+					</section>
+					<section>
+						<h3>Apprx. RatioCut for $k=2$ - cont.</h3>
+						<p>By Rayleigh-Ritz theorm, the solution of this problem is given by the 2nd smallest eigenvector of $L$ (the 1st smallest is value $0$ with vector $\mathbb{1}$).</p>
+						<p class="fragment">So we can approximate a minimizer of RatioCut by the 2nd eigenvector of $L$. But, we need to transform the real-valued solution into a discrete indicator vector. The simplest way to do that is:
+						<br />
+							\[
+							\left\{
+							\begin{array}{ll}
+							v_i \in A  & \mbox{if } f_i \geq 0 \\
+							v_i \in \bar{A}  & \mbox{if } f_i < 0
+							\end{array}
+							\right.
+						\]
+						</p>
+						<p class="fragment">But, for larger $k$ values, that way is too simple. What most spectral clustering algorithms do, is treat the coordinates $f_i$ as points in $\mathbb{R}$ and cluster them into two groups $C,\bar{C}$ by the $k$-means method.
+							<br />
+							\[
+							\left\{
+							\begin{array}{ll}
+							v_i \in A  & \mbox{if } f_i \in C \\
+							v_i \in \bar{A}  & \mbox{if } f_i \in \bar{C}
+							\end{array}
+							\right.
+							\]</p>
+						<p class="fragment">This is exactly the <i>unnormalized spectral clustering</i> algorithm for the case of $k=2$.</p>
+					</section>
+					<section>
+						<h3>Approximating RatioCut for any $k$</h3>
+						<p>Given a partition of $V$ into $k$ sets $A_1,...,A_k$, we defined $k$ indicator vectors $h_j=(h_{1,j},...,h_{n,j})'$ by
+						<br />
+						\[
+							h_{i,j}=
+							\left\{
+							\begin{array}{ll}
+							1/\sqrt{|A_j|} & \mbox{if } v_i \in A_j \\
+							0 & \mbox{otherwise}
+							\end{array}
+							\right.
+							\quad
+							\quad
+							(i=1,...,n;j=1,...,k)
+							\tag{5}
+						\]</p>
+						<p class="fragment">Then we set the matrix $H \in \mathbb{R}^{n \times k}$ such that its columns are $h_{i,j}$. Also we can see that H columns' are orthonormal o each other - $H'H=I$. So we get:
+						<br />
+						\[
+							h_i'Lh_i=\frac{\mbox{cut}(A_i,\bar{A_i})}{|A_i|}=(H'LH)_{ii}
+						\]</p>
+						<p class="fragment">And using all that we get: <br />
+						\[
+							\mbox{RatioCut}(A_1,...,A_k)=\sum_{i=1}^kh_i'Lh_i=\sum_{i=1}^k(H'LH)_{ii}=\mbox{Tr}(H'LH)
+						\]</p>
+					</section>
+					<section>
+						<h3>Approximating RatioCut for any $k$ - cont.</h3>
+						<p>So now we can rewrite the problem of minimizing $\mbox{RatioCut}(A_1,...,A_k)$ as: <br />
+						\[
+							\mbox{min}_{A_1,...,A_k} \mbox{ Tr}(H'LH) \mbox{ s.t. } H'H=I, H \mbox{ as defined in Eq. } (5)
+						\]</p>
+						<p class="fragment">Same as the $k=2$ case, we can relax the problem by allowing it to get real-values entries, and: <br />
+						\[
+							\mbox{min}_{H \in \mathbb{R}^{n \times k}} \mbox{ Tr}(H'LH) \mbox{ s.t. } H'H=I
+						\]</p>
 					</section>
 				</section>
 				<section>
@@ -504,7 +649,15 @@
 					</section>
 					<section>
 						<h3>The number of clusters - cont.</h3>
-						<p></p>
+						<p>In the toy example we will see later, we will conclude that the <i>eigengap heuristic</i> usually works well if the data contains very well pronounced clusters, but in ambiguous cases it also returns ambiguous results.</p>
+						<p class="fragment">Another conclusion is, that the choice of the number of clusters and the choice of the connectivity parameters of the similarity graphs affect each other. In one hand, if the connectivity parameter breaks the graph into, lets say, $k_0$ connected components, then choosing $k_0$ as the number of clusters will be a valid choice. In the other hand, when having a connected graph, is not clear how those two values interacts.</p>
+					</section>
+					<section>
+						<h3>The $k$-means step</h3>
+						<p>The choice of $k$-means algorithm as the clustering algorithm is an arbitrary choice. For example, in the ideal case of completely separated clusters, we know that the eigenvectors of $L$ and $L_{rw}$ are peicewise constant. In this case, all points $x_i$ which belong to the same cluster $C_s$ are mapped to exactly the sample point $y_i$, namely to the unit vector $e_s\in\mathbb{R}^k$. So any clustering technique applied to the points $y_i\in\mathbb{R}^k$ will be able to extract the correct clusters.</p>
+					</section>
+					<section>
+						<h3>Which graph Laplacian to use?</h3>
 					</section>
 				</section>
 				<section>
@@ -513,68 +666,7 @@
 
 				<section>
 					<section>
-						<h3>Graph cut point of view</h3>
-					</section>
-					<section>
-						<h3>Graph cut point of view</h3>
-						<p>As we know, clustering is to seperate points in different groups according to their similarities.</p>
-						<p class="fragment">If the data is given in form of a similarity graph, we can restate the clustering problem as <i>graph partitioning</i> problem, such that the edges between different groups of the graph have a very low weight, and the edges within a group have high weight.</p>
-					</section>
-					<section>
-						<h3>Graph cut point of view - mincut</h3>
-						<p>The simplest and most direct way to construct a partition of a graph is to solve the <strong>mincut</strong> problem: For a given number $k$ of subsets - choose a partition $A_1,...,A_k$ that minimizes
-							\[
-							\mbox{cut}(A_1,...,A_k):=\frac{1}{2}\sum_{i=1}^kW(A_i,\bar{A_i})
-							\]
-							<br />Here, we use the notation $W(A,B):=\sum_{i \in A,j \in B}w_{ij}$ that we seen before, and $\bar{A}$ for the complement of $A$.
-						</p>
-					</section>
-					<section>
-						<h3>Mincut - continue</h3>
-						<p>For $k=2$, mincut is relatively easy problem to solve, even efficiently. But, in practice, sometimes the result is not what we want: In many cases, mincut simply separates one individual vertex from the rest.</p>
-						<p class="fragment">One way to solve it, is to explicitly request that the sets $A_1,...,A_k$ are "reasonably large".</p>
-						<p class="fragment">The two most common functions to encode this are RatioCut and the normalized cut Ncut.</p>
-					</section>
-					<section>
-						<h3>RatioCut & Ncut - continue</h3>
-						<p>
-							\[
-							\mbox{RatioCut}(A_1,...,A_k):=\frac{1}{2}\sum_{i=1}^k\frac{W(A_i,\bar{A_i})}{|A_i|}=\sum_{i=1}^k\frac{\mbox{cut}(A_i,\bar{A_i})}{|A_i|} \\
-							\mbox{Ncut}(A_1,...,A_k):=\frac{1}{2}\sum_{i=1}^k\frac{W(A_i,\bar{A_i})}{\mbox{vol}(A)}=\sum_{i=1}^k\frac{\mbox{cut}(A_i,\bar{A_i})}{\mbox{vol}(A)}
-							\]
-						</p>
-						<p class="fragment">The difference between RatioCut and Ncut is how they defined the size of a subset $A_i$: <br />RatioCut define it as the the number of vertices in $A_i$: $|A_i|$.<br />Ncut define it as the weights of the edges in $A_i$: $\mbox{vol}(A)$.</p>
-					</section>
-					<section>
-						<h3>RatioCut & Ncut - continue</h3>
-						<p>As easily seen in the formulas of RatioCut and Ncut, both of them are minimized if the respective sizes of the clusters $A_i$ are large "together", or in other words - balanced.</p>
-						<p class="fragment">This added condition (balanced clusters) makes the previously simple problem to solve now a NP hard.</p>
-						<p class="fragment">Spectral clustering is a way to solve relaxed versions of those problems.</p>
-					</section>
-					<section>
-						<h3>Approximating RatioCut for $k=2$</h3>
-						<p>Our goal is to solve the optimization problem $\min_{A\subset V}{\mbox{RatioCut}(A,\bar{A})}$. Lets rewrite the problem in a more convenient way.</p>
-						<p class="fragment">For given subset $A \subset V$ we defined $f=(f_1,...,f_n)'\in \mathbb{R}^n$ such that:
-							\[
-							f_i=
-							\left\{
-							\begin{array}{ll}
-							\sqrt{|\bar{A}|/|A|}  & \mbox{if } v_i \in A \\
-							-\sqrt{|A|/|\bar{A}|}  & \mbox{if } v_i \in \bar{A}
-							\end{array}
-							\right.
-							\]</p>
-					</section>
-					<section>
-						<h3>Apprx. RatioCut for $k=2$ - continue</h3>
-						<p>Now we can rewrite the RatioCut function with the unnormalized graph Laplacian:</p>
-						<small>\[
-							f'Lf=\frac{1}{2}\sum_{i,j=1}^nw_{ij}(f_i-f_j)^2 \\
-							=\frac{1}{2}\sum_{i\in A,j\in \bar{A}}w_{ij}\Bigg(\sqrt{\frac{\bar{A}}{A}}+\sqrt{\frac{A}{\bar{A}}}\Bigg)^2 +
-							\frac{1}{2}\sum_{i\in \bar{A},j\in A}w_{ij}\Bigg(-\sqrt{\frac{\bar{A}}{A}}-\sqrt{\frac{A}{\bar{A}}}\Bigg)^2 \\
-							=\mbox{cut}(A,\bar{A})\Bigg(\frac{|\bar{A}|}{|A|}+\frac{|A|}{|\bar{A}|}+2\Bigg)\\
-							=\cdot\cdot\cdot=|V|\cdot\mbox{RatioCut}(A,\bar{A})
-							\]</small>
+						<h3>toy example - starts in pages 8-9</h3>
 					</section>
 				</section>
 				<section>
