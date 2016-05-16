@@ -762,7 +762,7 @@
 						<p class="fragment">For both normalized spectral clustering algorithms, it can be proved that the results do converge, as we take $n \to \infty$. In that limit, $L_{sym}$ converges to an operator $U$, which means that the eigenvectors and eigenvalues of $L_{sym}$ converges into those of $U$. Similar proof can be shown about random walk. So the consistency of both $L_{rw}$ and $L_{sym}$ hold.</p>
 						<p class="fragment">That can't be said about unnormalized spectral clustering algorithm. It can be proved that $L$ doesn't converge, or converge to trivial solution, such as single point being a cluster. That's true not only for very large sample size, but even in case of small sample size. </p>
 					</section>
-					<section>
+					<section id="minimal_degree">
 						<h3>Which graph Laplacian to use? - cont.</h3>
 						<p>The way to prevent those problems is this: We need to make sure that the eigenvalues of $L$ used in spectral clustering are significantly smaller than the minimal degree in the graph.</p>
 						<p class="fragment">The mathematical reason for this condition is that eigenvectors larger than the minimal degree approximate Dirac functions, which have value $\sim0$ in all but one coordinate. So, using those vectors for clustering will seperate the one vertex where the eigenvector is non-zero from the others.</p>
@@ -832,6 +832,22 @@
 					</section>
 					<section>
 						<h3>Toy example - number of clusters - eigengap heuristic</h3>
+						<img data-src="imgs/figure4.png" />
+						<p>The first row shows the histogram of 3 samples. We construct the $10$-nearest graph and plot the eigenvalues of $L_{rw}$ of each sample (Results for $L$ are similar). The first data sample consists of 4 well seperated clusters, and we can see that the first 4 eigenvalues are $\sim 0$. Then the gap between the 4th and 5th eigenvalue is large, which according to the eigengap heuristic, indicates that the data set contains 4 clusters. In the other samples, the clusters are less pronounced, and the eigengap heuristic is less effective.</p>
+					</section>
+					<section>
+						<h3>Toy example - consistencies issues</h3>
+						<img data-src="imgs/figure5.png" />
+						<p>In the <a href="#minimal_degree">Practical details</a> part we said that for unnormalized clustering, the way to insure that the eigenvectors are useful, their eigenvalues need to be significantly lower than the graph minimal degree ("min-deg").</p>
+						<p class="fragment">In the image up here and in <a href="#/9/3">here</a>, the dashed line is the min-deg, eigenvectors above it are blue stars, below are red diamonds. </p>
+						<p class="fragment">We can see in the image, that the eigenvector corresponding the "red" eigenvalues are "useful" eigenvectors. In the first image, when $\sigma=1$, the eigenvalues 2,3,4 are below the min-deg, and their vectors are meaningful. </p>
+					</section>
+					<section>
+						<h3>Toy example - consistencies issues - cont.</h3>
+						<img data-src="imgs/figure5.png" />
+						<p>Now we increase $\sigma$, and we can see as the eigenvalues tend to move toward the min-deg.</p>
+						<p class="fragment">In case of $\sigma=2$, only first 3 values are below the min-deg, and in case when $\sigma=5$, only the first 2 values are below it.</p>
+						<p class="fragment">We can also see, that as soon as the eigenvalue get closer to the min-deg, their eigenvector approximate a Dirac fucntion, and they are useless for clustering.</p>
 					</section>
 				</section>
 				<!--<section>
