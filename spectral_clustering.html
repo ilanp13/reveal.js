@@ -38,13 +38,13 @@
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
 				<section>
-					<h3>Spectral Clustering</h3>
-					<h6>By Ilan Peretz</h6>
+					<h2>Spectral Clustering</h2>
+					<h3>By Ilan Peretz</h3>
 				</section>
 
 				<section>
 					<section>
-						<h3>What does "Spectral Clustering" means anyway?</h3>
+						<h2>What does "Spectral Clustering" means anyway?</h2>
 					</section>
 
 					<section>
@@ -75,7 +75,7 @@
 				</section>
 				<section>
 					<section>
-						<h3>Lets start with some general definitions:</h3>
+						<h2>Lets start with some general definitions:</h2>
 					</section>
 					<section>
 						<h3>Similarity Graphs</h3>
@@ -88,10 +88,7 @@
 								</ul>
 							</li>
 						</ul>
-					</section>
-					<section>
-						<h3>Similarity Graphs - cont.</h3>
-						<p>So now we can reformulate the problem of clustering to the problem of finding a partition of the graph $G$ such that the edges between the different groups in the partition have very low (if at all) weights, and the weights of edges inside a group have a very high weights.</p>
+						<p  class="fragment">So now we can reformulate the problem of clustering to the problem of finding a partition of the graph $G$ such that the edges between the different groups in the partition have very low (if at all) weights, and the weights of edges inside a group have a very high weights.</p>
 					</section>
 					<section>
 						<h3>Graph Adjacency Matrix</h3>
@@ -140,12 +137,7 @@
 								W(A,B) := \sum_{i \in A,j \in B}W_{ij}
 								\]
 							</li>
-						</ul>
-					</section>
-					<section>
-						<h3>Some graph partition notations - cont.</h3>
-						<ul>
-							<li>
+							<li class="fragment">
 								There are two options to measure the "size" of subset $A \subset V $ :
 								<ol>
 									<li class="fragment">
@@ -191,13 +183,8 @@
 									</li>
 								</ul>
 							</li>
-						</ul>
-					</section>
-					<section>
-						<h3>Types of similarity graphs - cont.</h3>
-						<ul>
-							<li>
-								<strong>The fully connected graph:</strong> Connect all points with positive similarity between them, which is the weight of the edge. This type is only useful if the similarity function itself models local neighborhoods. As example we can take the Gaussian similarity function:
+							<li class="fragment">
+								<strong>The fully connected graph:</strong> Connect all points with the positive similarity as edge's weight. This type is only useful if the similarity function itself models local neighborhoods. As example we can take the Gaussian similarity function:
 								\[
 								s(x_i,x_j)=e^{{-\|x_i-x_j\|^2}/{2\sigma^2}}
 								\]
@@ -209,18 +196,15 @@
 				</section>
 				<section>
 					<section>
-						<h3>Graph Laplacians</h3>
-						<h4>And their (basic) properties</h4>
+						<h2>Graph Laplacians</h2>
+						<h3>And their (basic) properties</h3>
 					</section>
 					<section>
 						<h3>Graph Laplacians</h3>
 						<p>As we mentioned earlier, the concept of Spectral Clustering is coming from the field of <i>spectral graph theory</i>, in which graph Laplacians matrices are the primary tool. So they will be primary tool in spectral clustering as well.</p>
-						<p>We are now going to define the graph Laplacians and mention their most important properties.</p>
-						<p>Note: There is no unique convention which matrix exactly is called "graph Laplacians". <br />Mostly, every author gives is own version of it.</p>
-					</section>
-					<section>
-						<h3>Graph Laplacians</h3>
-						<h4>Pre-assumptions:</h4>
+						<p class="fragment">We are now going to define the graph Laplacians and mention their most important properties.</p>
+						<p class="fragment">Note: There is no unique convention which matrix exactly is called "graph Laplacians". <br />Mostly, every author gives is own version of it.</p>
+						<p class="fragment"><strong>Pre-assumptions:</strong></p>
 						<ul>
 							<li class="fragment">
 								Graph $G$ is an undirected, weighted graph with weight matrix $W$, where $w_{ij}=w_{ji}\geq0$.
@@ -236,20 +220,15 @@
 							</li>
 						</ul>
 					</section>
-					<section>
+					<section id="unnormalized_lapl">
 						<h3>Unnormalized Graph Laplacians</h3>
 						<p>Considering D - the <i>degree matrix</i> of $G$, and $W$ - the weight matrix of $G$, we get the <strong><i>unnormalized graph Laplacian</i></strong>:
 						\[
 							L=D-W
 							\]
 						</p>
-						<br />
-						<br />
 						<p class="fragment">Note: self edges, which "sits" on the diagonal of the adjacency matrix $W$, do not change the graph Laplacians.</p>
-					</section>
-					<section id="unnormalized_lapl">
-						<h3>Unnormalized Graph Laplacians</h3>
-						<h4>Lets introduce some important properties of $L$:</h4>
+						<p class="fragment"><strong>Lets introduce some important properties of $L$:</strong></p>
 						<ol>
 							<li class="fragment">
 								For every vector $f \in \mathbb{R}^n$ we have:
@@ -329,7 +308,7 @@
 				</section>
 				<section>
 					<section>
-						<h3>Spectral Clustering Algorithms</h3>
+						<h2>Spectral Clustering Algorithms</h2>
 					</section>
 					<section>
 						<h3>Spectral Clustering Algorithms</h3>
@@ -398,7 +377,7 @@
 
 				<section>
 					<section>
-						<h3>Graph cut point of view</h3>
+						<h2>Graph cut point of view</h2>
 					</section>
 					<section>
 						<h3>Graph cut point of view</h3>
@@ -611,27 +590,92 @@
 							\mbox{min}_{T \in \mathbb{R}^{n \times k}} \mbox{ Tr}(T'D^{-1/2}LD^{-1/2}T) \;\;\mbox{s.t.}\;\; T'T=I
 							\]</p>
 						<p class="fragment">Re-substituting $H=D^{-1/2}T$ we see that the solution $H$ consists of the first $k$ eigenvectors of $L_{rw}$, or of $Lu=\lambda Du$.</p>
-						<p class="fragment">This yields the normalized spectral clustering algorithm by $L_{rw}$.</p><!-- //TODO next -->
+						<p class="fragment">This yields the normalized spectral clustering algorithm by $L_{rw}$.</p>
+					</section>
+					<section>
+						<h3>Comments on relaxation approach</h3>
+						<p>One important fact to remember: There is no guarantee on the quality of the solution of the relaxed problem, in compare with the exact solution. The diff between them can be large. Lets look on the next graph:</p>
+						<img data-src="imgs/figure2.png" style="border: 0 none;" class="fragment" />
+						<p class="fragment">This graph is called <i>The cockroach graph</i> (Guattery and Miller (1998)). The ideal cut for $k=2$ will obviously be cutting the edges $(v_k,v_{k+1}),(v_{3k},v_{3k+1})$, which will give RatioCut value of $2/k$. But the authors showed that unnormalized spectral clustering always cuts the vertical edges, causing the RatioCut value to be $1$.</p>
+						<p class="fragment">In general it is known that there are no efficient algorithms to approximate balanced graph cuts - and it is even NP hard problem.</p>
+						<p class="fragment">But, still the spectral relaxation is appealing and popular due to the fact that it results in a standard linear algebra problem, which is simple to solve.</p>
 					</section>
 				</section>
 				<section>
 					<section>
-						<h3>Practical Details</h3>
+						<h2>Random walks point of view</h2>
 					</section>
 					<section>
-						<h3>Practical Details</h3>
-						<p>So, we want to implement spectral clustering.</p>
-						<p class="fragment">There are some points to think of, some decisions to make, some parameters to set.<br />We will discuss them now.</p>
+						<h3>Random walks</h3>
+						<p>Another way to explain spectral clustering is based on random walks on the similarity graph. A <i>random walk</i> on a graph is a stochastic process, which randomly jumps from vertex to vertex.</p>
+						<p class="fragment">Later we'll see that the goal of spectral clustering here is to find a partition such that the random walk stays long within the same cluster, and seldom jumps between clusters.</p>
+						<p class="fragment">Adding that to mincut problem - a graph with low cut will "force" the random walk to stay on the same cluster, because it will have less "exits".</p>
+					</section>
+					<section>
+						<h3>Random walks - cont.</h3>
+						<p>The transition probability of jumping in one step from vertex $v_i$ to $v_j$ is proportional to $W_{ij}$: $p_{ij}:=w_{ij}/d_i$. And we can define the transition matrix $P=(p_{ij})_{i,j=1,...,n}$ will be:
+							<br />
+							\[
+							P=D^{-1}W
+							\]</p>
+						<p class="fragment">If the graph is connected and not-bipartite, the random walk always possesses a unique stationary distribution $\pi=(\pi_1,...,\pi_n)'$, where $\pi_i=d_i/\mbox{vol}(V)$.</p>
+						<p class="fragment">Also, $L_{rw}=I-D^{-1}W = I-P$, which means that $\lambda$ is an eigenvalue of $L_{rw}$ with eigenvector $u$ if and only if $1-\lambda$ is an eigenvalue of $P$ with eigenvector $u$.</p>
+						<p class="fragment">So we get that the largest eigenvectors of $P$ and the smallest eigenvectors of $L_{rw}$ can be used to describe cluster properties of the graph.</p>
+					</section>
+					<section id="rw_first_prop">
+						<h3>Random walks - cont.</h3>
+						<h4>Ncut via transition probabilities</h4>
+						<p>Let $G$ be connected and non-bipartite. Assume that we run the random walk $(X_t)_{t\in\mathbb{N}}$ starting with $X_0$ in the stationary distribution $\pi$. For disjoint subsets $A,B \subset V$, denote by $P(B\mid A):=P(X_1 \in B \mid X_0 \in A)$. Then:
+						<br />
+						\[
+							\mbox{Ncut}(A,\bar{A})=P(\bar{A}\mid A) + P(A \mid \bar{A}).
+						\]</p>
+						<p class="fragment">The <i>proof</i> can be found in the appendix <a href="#proof5">here</a>.</p>
+						<p class="fragment">This leads to a nice interpretation of Ncut and normalized spectral clustering: when we minimize Ncut, we actually searching for a cut such that a random walk seldom transitions $A$ to $\bar{A}$ and vice versa.</p>
+					</section>
+					<section>
+						<h3>Random walks - cont.</h3>
+						<h4>The commute distance</h4>
+						<p>The <i>commute distance</i> (also called <i>resistance distance</i>) $c_{ij}$ is the expected time it takes the random walk to travel from $v_i$ to $v_j$ and back.</p>
+						<p class="fragment">The commute distance has several nice properties, which making it particularly appealing for machine learning. As opposed to the <i>shortest path distance</i> on a graph, the commute distance decreases if there are many different short ways from $v_i$ to $v_j$.</p>
+						<p class="fragment">So commute distance looks at the set of short paths. By commute distance, two points are closer not only by the short path between them, but also if they lies in the same high-density region of the graph. So commute distance is well-suited for clustering purposes.</p>
+					</section>
+					<section>
+						<h3>Random walks - cont.</h3>
+						<h4>The commute distance - cont.</h4>
+						<p>The commute distance on a graph can be computed with the help of the generalized inverse (pseudo-inverse, Moore-Penrose inverse) $L^\dagger$ of the graph Laplacian $L$.</p>
+						<p class="fragment">We've seen that $L$ can be decomposed as $L=U\Lambda U'$, where $U$ columns are the eigenvectors, and $\Lambda$ is the diagonal matrix with the eigenvalues $\lambda_1,...,\lambda_n$ on the diagonal. As at least one eigenvalue is $0$, $L$ is not invertible. So, we define its generalized inverse as: $L^\dagger:=U\Lambda^\dagger U'$ where the matrix $\Lambda^\dagger$ is the diagonal matrix with diagonal entries $1/\lambda_i$ if $\lambda_i \neq 0$ and $0$ if $\lambda_i=0$. <br />$L^\dagger$ is positive semi-definite and symmetric, and the entries of $L^\dagger$ can be computed as:  $l_{ij}^\dagger = \sum_{k=2}^n \frac{1}{\lambda_k}u_{ik}u_{jk}$. </p>
+						<p class="fragment">So, lets say we have an undirected, connected graph, and we want to compute the commute distance. That can be done by:
+						<br />
+						\[
+							c_{ij}=\mbox{vol}(V)(l_{ii}^\dagger-2l_{ij}^\dagger+l_{jj}^\dagger)=\mbox{vol}(V)(e_i-e_j)'L^\dagger(e_i-e_j)
+						\]</p>
+					</section>
+					<section>
+						<h3>Random walks - cont.</h3>
+						<h4>The commute distance - cont.</h4>
+						<p>There are other ways to express $c_{ij}$, with use of $L_{sym}$ or determinants of certain sub-matrices of $L$, but the reason the authors chose this expression is this: It shows that $\sqrt{c_{ij}}$ can be considered as an Euclidean distance function on the vertices of the graph.</p>
+						<p class="fragment">This means that we can construct an embedding which maps the vertices $v_i$ of the graph on points $z_i \in \mathbb{R}^n$ such that the Euclidean distance between the points $z_i$ coincide with the commute distance on the graph: Choose $z_i \in \mathbb{R}^n$ corresponding to the $i$-th row of $U(\Lambda^\dagger)^{1/2}$, and we get:
+						<br />
+						\[
+							\langle z_i,z_j \rangle = e_i'L^\dagger e_j \\
+							c_{ij}=\mbox{vol}(V)\|z_i-z_j\|^2
+
+						\]</p>
+						<p class="fragment">But still the embedding used in spectral clustering and commute distance are not identical. There are some differences, and without making further assumptions (like choosing a strictly positive similarity function), the relation between them is rather loose.</p>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>Practical Details</h2>
+						<h4>(Or, how to start to implement spectral clustering)</h4>
 					</section>
 					<section>
 						<h3>Constructing the similarity graph</h3>
 						<p>Constructing the similarity graph for spectral clustering is not a trivial task, and little is known on theoretical implications of the different constructions.</p>
 						<p class="fragment">First, we need to decide which <strong>similarity function</strong> to use. Obviously, we need to choose a function that will have some meaning for our data points - that the function will give high similarity to points from same group, and the opposite.</p>
 						<p class="fragment">More over, the global "long-range" behavior of the similarity function is not so important - two points won't be connected whether they have similarity of $0.01$ or $0.001$.</p>
-					</section>
-					<section>
-						<h3>Constructing the similarity graph - cont.</h3>
-						<p>Usually, when the data points live in the Euclidean space $\mathbb{R}^d$, we'll take the Gaussian similarity function:
+						<p class="fragment">Usually, when the data points live in the Euclidean space $\mathbb{R}^d$, we'll take the Gaussian similarity function:
 							\[
 							s(x_i,x_j)=e^{{-\|x_i-x_j\|^2}/{2\sigma^2}}
 							\]</p>
@@ -653,63 +697,37 @@
 						<p>How to choose the $k$ or $\epsilon$ parameters wisely? Not an easy task, specially when barely any theoretical results are known to guide us.</p>
 						<p class="fragment">All the results of how connectivity of random graphs can be achieved holds only in the case when $\mbox{lim}|V| \to \infty$. All those results don't really help us for choosing in case of finite $|V|$.</p>
 						<p class="fragment">In general, if the similarity graph contains more connected components than the number of clusters we want to detect, then the algorithm will return connected components as clusters. which is not always the wanted result.</p>
+						<p class="fragment">So, when building the similarity graph, we need to make sure that the graph is connected, or that the number of connected components or isolated vertices is much smaller than the number of clusters we want to get.</p>
 					</section>
 					<section>
 						<h3>Parameters of similarity graph - cont.</h3>
-						<p>So, when building the similarity graph, we need to make sure that the graph is connected, or that the number of connected components or isolated vertices is much smaller than the number of clusters we want to get.</p>
-						<p class="fragment">If the graph is small or medium-sized, this can be tried out "by foot". For larger graphs, it depends on the graph:</p>
+						<p>If the graph is small or medium-sized, this can be tried out "by foot". For larger graphs, it depends on the graph:</p>
 						<ul>
 							<li class="fragment">$k$-nearest neighbor graph - the first approximation could be to choose $k$ in the order of $\mbox{log}(n)$.</li>
-						</ul>
-					</section>
-					<section>
-						<h3>Parameters of similarity graph - cont.</h3>
-						<ul>
-							<li>Mutual $k$-nearest neighbor graph - tricky task. This graph obviously has less edges than it's not-mutual brother - which causes the graph to have more connected components or more isolated vertices. Not so good. So our general goal will be to choose $k$ really high. But there are no records on how to do it efficiently.</li>
+							<li class="fragment">Mutual $k$-nearest neighbor graph - tricky task. This graph obviously has less edges than it's not-mutual brother - which causes the graph to have more connected components or more isolated vertices. Not so good. So our general goal will be to choose $k$ really high. But there are no records on how to do it efficiently.</li>
 							<li class="fragment">The $\epsilon$-neighborhood graph - We need to choose $\epsilon$ as the length of the longest edge in a minimal spanning tree of the fully connected graph (Which can be determined by any minimal spanning tree algorithm). However, in case the data contains outliers, or in case the data contains several tight clusters which are very far apart from each other, our $\epsilon$ will be too large to work with.</li>
+							<li class="fragment">Fully connected graph - if used with a similarity function (like the Gaussian), then the scale of the function should be chosen such that it returns a graph with similar properties as a corresponding $k$ or $\epsilon$ graph would have.</li>
 						</ul>
 					</section>
 					<section>
 						<h3>Parameters of similarity graph - cont.</h3>
-						<ul>
-							<li>Fully connected graph - if used with a similarity function (like the Gaussian), then the scale of the function should be chosen such that it returns a graph with similar properties as a corresponding $k$ or $\epsilon$ graph would have.</li>
-							<li class="fragment">Also, we need to make sure that for most of the data points, the similarity values the function return are not "too small" or "too high".</li>
-							<li class="fragment">Specifically for the Gaussian: We can choose $\sigma$ in the order of the mean distance of a point to its $k$-th nearest neighbor (when $k \sim \mbox{log}(n)+1$, as described before). Other way, set $\epsilon$ as before, and then choose $\sigma = \epsilon$.</li>
-						</ul>
+						<p>Also, we need to make sure that for most of the data points, the similarity values the function return are not "too small" or "too high".</p>
+						<p class="fragment">Specifically for the Gaussian: We can choose $\sigma$ in the order of the mean distance of a point to its $k$-th nearest neighbor (when $k \sim \mbox{log}(n)+1$, as described before). Other way, set $\epsilon$ as before, and then choose $\sigma = \epsilon$.</p>
+						<p class="fragment">To summerize the choice of parameters - all the given rules are nice, but nothing is certain. It stays quite a sensitive task in spectral clustering to choose the parameters, and what can work for one set of data points, can fail ultimately for other.</p>
+						<p class="fragment">Finding rules which have a theoretical justification should be considered an interesting and important topic for future researches.</p>
 					</section>
 					<section>
-						<h3>Parameters of similarity graph - cont.</h3>
-						<ul>
-							<li>To summerize the choice of parameters - all the given rules are nice, but nothing is certain. It stays quite a sensitive task in spectral clustering to choose the parameters, and what can work for one set of data points, can fail ultimately for other.</li>
-							<li class="fragment">Finding rules which have a theoretical justification should be considered an interesting and important topic for future researches.</li>
-						</ul>
-					</section>
-					<section>
-						<h3>Computing th eigenvectors</h3>
-						<p>One of the steps of the algorithm is to compute the first $k$ eigenvectors of a potentially large graph Laplacian matrix.</p>
-						<p class="fragment">Luckily, using the $k$-nearest or the $\epsilon$-neighborhood graphs, we get sparse matrices.</p>
-						<p class="fragment">There exist efficient methods to compute the first eigenvectors of sparse matrices, like the <i>power method</i> or <i>Krylov subspace</i> methods such as the <i>Lanczos</i> method.</p>
-						<p class="fragment">The speed of convergence of those algorithms depends on the size of the eigengap (also called spectral gap): $\gamma_k=|\lambda_k-\lambda_{k+1}|$.</p>
-						<p class="fragment">Larger eigengap value means faster convergence.</p>
-					</section>
-					<section>
-						<h3>Computing th eigenvectors - cont.</h3>
-						<p>A problem can occur if one of the $k$ first eigenvalues has multiplicity larger than $1$. For example, in the ideal situation of $k$ disconnected clusters, the eigenvalue $0$ has multiplicity $k$. In that case - the eigenspace is spanned by the $k$ cluster indicator vectors.<br />
-						But unfortunately, the vectors computed by the eigensolvers do not necessarily converge to those vectors. They just converge to some orthonormal basis of the eigenspace, the base depends on the implementation details.</p>
-					</section>
-					<section>
-						<h3>Computing th eigenvectors - cont.</h3>
-						<p>But, all vectors in the space spanned by the cluster indicator vectors $\mathbb{1}_{A_i}$ have the form $u=\sum_{i=1}^ka_i\mathbb{1}_{A_i}$ for some coefficients $a_i$, so they are piecewise constant on the clusters.</p>
+						<h3>Computing the eigenvectors step</h3>
+						<p>Computing the first $k$ eigenvectors of a potentially large graph Laplacian matrix is a hard task. Luckily, using the $k$-nearest or the $\epsilon$-neighborhood graphs, we get sparse matrices, which are easier to solve using methods like the <i>power method</i> or the <i>Lanczos</i> method. The speed of convergence of those algorithms depends on the size of the eigengap (also called spectral gap): $\gamma_k=|\lambda_k-\lambda_{k+1}|$. Larger eigengap value means faster convergence.</p>
+						<p class="fragment">When one of the $k$ first eigenvectors has multiplicity larger than $1$, like in case when the eigenvalue $0$ has multiplicity $k$, the eigenspace is spanned by the $k$ cluster indicator vectors, and our computed vectors won't necessarily converge to them.</p>
+						<p class="fragment">But, all vectors in the space spanned by the cluster indicator vectors $\mathbb{1}_{A_i}$ have the form $u=\sum_{i=1}^ka_i\mathbb{1}_{A_i}$ for some coefficients $a_i$, so they are piecewise constant on the clusters.</p>
 						<p class="fragment">So the vectors returned by the eigensolvers still contain the wanted data about the clusters, which is needed for the $k$-means algorithm to reconstruct the clusters.</p>
 					</section>
 					<section>
 						<h3>The number of clusters</h3>
 						<p>Choosing the number $k$ of clusters is a general problem for all clustering algorithms, and as such there are lots of methods to solve it. All of those methods are suitable for spectral clustering.</p>
 						<p class="fragment">There is one tool which is particularly designed for spectral clustering: <i>eigengap heuristic</i>. It can be used for all three graph Laplacians. The goal is to choose the number $k$ such that all eigenvalues $\lambda_1,...,\lambda_k$ are very small, but $\lambda_{k+1}$ is relatively large.</p>
-					</section>
-					<section>
-						<h3>The number of clusters - cont.</h3>
-						<p>There are several justifications for this procedure:</p>
+						<p class="fragment">There are several justifications for this procedure:</p>
 						<ul>
 							<li class="fragment">Based on perturbation theory, we observe that in the ideal case of $k$ completely disconnected clusters, the eigenvalue $0$ has multiplicity $k$, and then there is a gap to the $(k+1)$th eigenvalue $\lambda_{k+1}>0$.</li>
 							<li class="fragment">Based on spectral graph theory, many geometric invariants of the graph can be expressed or bounded with the help of the first eigenvalues of the graph Laplacian. In particular, the sizes of cuts are closely related to the size of the first eigenvalues.</li>
@@ -729,17 +747,17 @@
 					</section>
 				</section>
 				<section>
-					<h3>Appendices</h3>
+					<h2>Appendices</h2>
 				</section>
 
 				<section>
 					<section>
-						<h3>toy example - starts in pages 8-9</h3>
+						<h2>toy example - starts in pages 8-9</h2>
 					</section>
 				</section>
 				<section>
 					<section>
-						<h3>Mathematical Proofs</h3>
+						<h2>Mathematical Proofs</h2>
 					</section>
 					<section id="proof1">
 						<h3>Proof of the unnormalized graph Laplacian Properties</h3>
@@ -756,6 +774,10 @@
 					<section id="proof4">
 						<h3>Proof of the spectrum of L and L</h3>
 						<a href="#spectrum_of_L_and_L">back</a>
+					</section>
+					<section id="proof5">
+						<h3>Proof of the spectrum of L and L</h3>
+						<a href="#rw_first_prop">back</a>
 					</section>
 				</section>
 			</div>
