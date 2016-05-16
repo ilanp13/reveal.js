@@ -819,14 +819,14 @@
 					</section>
 					<section>
 						<h3>Toy example - consistencies issues</h3>
-						<img data-src="imgs/figure5.png" />
+						<img data-src="imgs/figure1_3.png" style="width: 700px;"/>
 						<p>In the <a href="#minimal_degree">Practical details</a> part we said that for unnormalized clustering, the way to ensure that the eigenvectors are useful, their eigenvalues need to be significantly lower than the graph minimal degree ("min-deg").</p>
-						<p class="fragment">In the image up here and in <a href="#/9/3">here</a>, the dashed line is the min-deg, eigenvectors above it are blue stars, below are red diamonds. </p>
-						<p class="fragment">We can see in the image, that the eigenvector corresponding the "red" eigenvalues are "useful" eigenvectors. In the first image, when $\sigma=1$, the eigenvalues 2,3,4 are below the min-deg, and their vectors are meaningful. </p>
+						<p class="fragment">In the image up here and in the next slide, the dashed line is the min-deg, eigenvectors above it are blue stars, below are red diamonds. </p>
+						<p class="fragment">We can see in the image, that the eigenvector corresponding the "red" eigenvalues are "useful" eigenvectors. When $\sigma=1$, the eigenvalues 2,3,4 are below the min-deg, and their vectors are meaningful. </p>
 					</section>
 					<section>
 						<h3>Toy example - consistencies issues - cont.</h3>
-						<img data-src="imgs/figure5.png" />
+						<img data-src="imgs/figure5.png" style="width: 700px;" />
 						<p>Now we increase $\sigma$, and we can see as the eigenvalues tend to move toward the min-deg.</p>
 						<p class="fragment">In case of $\sigma=2$, only first 3 values are below the min-deg, and in case when $\sigma=5$, only the first 2 values are below it.</p>
 						<p class="fragment">We can also see, that as soon as the eigenvalue get closer to the min-deg, their eigenvector approximate a Dirac fucntion, and they are useless for clustering.</p>
