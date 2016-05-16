@@ -592,7 +592,7 @@
 					<section>
 						<h3>Comments on relaxation approach</h3>
 						<p>One important fact to remember: There is no guarantee on the quality of the solution of the relaxed problem, in compare with the exact solution. The diff between them can be large. Lets look on the next graph:
-						<img data-src="imgs/figure2.png" style="float:right; border: 0 none; padding: 0 0 10px 10px;" class="fragment" /></p>
+						<img data-src="imgs/figure2.png" style="float:right; padding: 0 0 10px 10px;" class="fragment" /></p>
 						<p class="fragment">This graph is called <i>The cockroach graph</i> (Guattery and Miller (1998)). The ideal cut for $k=2$ will obviously be cutting the edges $(v_k,v_{k+1}),(v_{3k},v_{3k+1})$, which will give RatioCut value of $2/k$. But the authors showed that unnormalized spectral clustering always cuts the vertical edges, causing the RatioCut value to be $1$.</p>
 						<p class="fragment">In general it is known that there are no efficient algorithms to approximate balanced graph cuts - and it is even NP hard problem.</p>
 						<p class="fragment">But, still the spectral relaxation is appealing and popular due to the fact that it results in a standard linear algebra problem, which is simple to solve.</p>
@@ -800,11 +800,38 @@
 					<section>
 						<h3>Toy example</h3>
 						<p>This example data set consists of a random sample of 200 points $x_1,...,x_{200}\in\mathbb{R}$ drawn according to a mixture of four Gaussians.</p>
-						<img data-src="imgs/figure1.png" style="width: 58%; padding-left: 2%; float: right;">
-						<p style="font-size:20px; width: 38% !important; float: left;">The first row shows the histogram of a sample drawn from this distribution (the $x$-axis represents the one-dimensional data space). The Gaussian similarity function was chosen, with $\sigma=1$. Both fully connected and $10$-nearest neighbor graphs are considered.</p>
+						<p class="fragment"><img data-src="imgs/figure1_1.png" style="padding:5px 0 5px 5px; float: right;" />This is a histogram of a sample drawn from this distribution (the $x$-axis represents the one-dimensional data space). The Gaussian similarity function was chosen, with $\sigma=1$. For similarity graph, both fully connected and $10$-nearest neighbor graphs are considered.</p>
+						<p class="fragment">We're going to show the first eigenvalues and eigenvectors of $L$ and $L_{rw}$. In the eigenvalue plots we plot $i$ vs. $\lambda_i$. In the eigenvector plots of an eigenvector $u=(u_1,...,u_{200})'$ we plot $x_i$ vs. $u_i$ (where here, $x_i$ is simply a real number, so we can put it on $x$-axis).</p>
 					</section>
 					<section>
-						<h3>Toy example - cont.</h3>
+						<h3>Toy example - eigenvalues and eigenvectors</h3>
+						<img data-src="imgs/figure1_2.png" />
+						<p class="fragment">Here are the results based on the $10$-nearest neighbor graph. We can see that the first four eigenvalues are $0$, and the corresponding eigenvectors are cluster indicator vectors.</p>
+						<p class="fragment">The clusters form disconnected parts in the $10$-nearest neighbor graph, and the eigenvectors are given by <a target="_blank" href="#spectrum_of_L">this</a> and <a href="#spectrum_of_L_and_L" target="_blank">this</a>, accordingly.</p>
+					</section>
+					<section>
+						<h3>Toy example - eigenvalues and eigenvectors - cont.</h3>
+						<img data-src="imgs/figure1_3.png" />
+						<p class="fragment" style="font-size: 20px;">Here are the results based on the fully connected graph. As the Gaussian similarity function is always positive, this graph only consists of one connected component. Thus, eigenvalue 0 has multiplicity $1$, and the first eigenvector is the constant vector. The following eigenvectors carry the information about the clusters.</p>
+						<p class="fragment" style="font-size: 20px;">For example, in the unnormalized case, if we threshold the 2nd vector at $0$, then the part below $0$ relate to clusters 1 and 2, and above $0$ relate to clusters 3 and 4, and so on.</p>
+						<p class="fragment" style="font-size: 20px;">In all cases, the first 4 vectors carry all the info about the 4 clusters. And in all the cases - applying $k$-means on this 4 vectors easily detects the correct 4 clusters.</p>
+					</section>
+					<section>
+						<h3>Toy example - choosing type of similarity graph</h3>
+						<p style="width: 100%; float: left;"><img data-src="imgs/figure3_1.png" style="padding:5px 0 5px 5px; width: 290px; float: right;" />We take distribution on $\mathbb{R}^2$ with three clusters: two "moons" and a Gaussian. The density of the bottom moon is chosen to be larger than the one of the top moon.<br /> Here is a sample drawn from this distribution.</p>
+						<p style="width: 100%; float: left;" class="fragment"><img data-src="imgs/figure3_2.png" style="padding:5px 0 5px 5px; width: 290px; float: right;" />Here we can see that it is difficult to choose a useful parameter $\epsilon$. With $\epsilon=0.3$ as in the image, the points on the middle moon are already very tightly connected, while the points in the Gaussian are barely connected. This problem usually occur when the distance between data points is different between regions (named points "on different scales").</p>
+					</section>
+					<section>
+						<h3>Toy example - choosing type of similarity graph - cont.</h3>
+						<p style="width: 100%; float: left;"><img data-src="imgs/figure3_3.png" style="padding:5px 0 5px 5px; width: 290px; float: right;" />
+						$k$-nearest neighbor, though, can connect points "on different scales". We can see that the points in the low-density Gaussian are connected with the high-density moon. But, the 2 high-density moons are clustered apart, as should be. This is a general property of $k$-nearest neighbor graphs - adding low-density region to a close high-density region, and seperating far away high-density regions.
+						</p>
+						<p style="width: 100%; float: left;" class="fragment"><img data-src="imgs/figure3_4.png" style="padding:5px 0 5px 5px; width: 290px; float: right;" />
+							The mutual $k$-nearest neighbor graph connect points within regions of constant density, but does not connect regions of different densities with each other.
+							So it does connect points "on different scales", but doesn't mix those scales with each other. So it seems particularly well-suited in detecting clusters of different densities.</p>
+					</section>
+					<section>
+						<h3>Toy example - number of clusters - eigengap heuristic</h3>
 					</section>
 				</section>
 				<!--<section>
