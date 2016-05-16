@@ -426,13 +426,13 @@
 							\tag{2}
 							\]</p>
 						<p class="fragment">Now we can rewrite the RatioCut function with the unnormalized graph Laplacian:
-							\[
+							<span style="font-size: 22px;">\[
 							f'Lf=\frac{1}{2}\sum_{i,j=1}^nw_{ij}(f_i-f_j)^2
 							=\frac{1}{2}\sum_{i\in A,j\in \bar{A}}w_{ij}\Bigg(\sqrt{\frac{\bar{A}}{A}}+\sqrt{\frac{A}{\bar{A}}}\Bigg)^2 + \\
 							\frac{1}{2}\sum_{i\in \bar{A},j\in A}w_{ij}\Bigg(-\sqrt{\frac{\bar{A}}{A}}-\sqrt{\frac{A}{\bar{A}}}\Bigg)^2
 							=\mbox{cut}(A,\bar{A})\Bigg(\frac{|\bar{A}|}{|A|}+\frac{|A|}{|\bar{A}|}+2\Bigg)\\
 							=\cdot\cdot\cdot=|V|\cdot\mbox{RatioCut}(A,\bar{A})
-							\]</p>
+							\]</span></p>
 					</section>
 					<section>
 						<h3>Apprx. RatioCut for $k=2$ - cont.</h3>
@@ -593,7 +593,7 @@
 						<h3>Comments on relaxation approach</h3>
 						<p>One important fact to remember: There is no guarantee on the quality of the solution of the relaxed problem, in compare with the exact solution. The diff between them can be large. Lets look on the next graph:
 						<img data-src="imgs/figure2.png" style="float:right; padding: 0 0 10px 10px;" class="fragment" /></p>
-						<p class="fragment">This graph is called <i>The cockroach graph</i> (Guattery and Miller (1998)). The ideal cut for $k=2$ will obviously be cutting the edges $(v_k,v_{k+1}),(v_{3k},v_{3k+1})$, which will give RatioCut value of $2/k$. But the authors showed that unnormalized spectral clustering always cuts the vertical edges, causing the RatioCut value to be $1$.</p>
+						<p class="fragment">This graph is called <i>The cockroach graph</i> (Guattery and Miller (1998)). The ideal cut for $k=2$ will obviously be cutting the edges $(v_k,v_{k+1}),(v_{3k},v_{3k+1})$, which will give RatioCut value of $2/k$. But it can be showed that unnormalized spectral clustering always cuts the vertical edges, causing the RatioCut value to be $1$.</p>
 						<p class="fragment">In general it is known that there are no efficient algorithms to approximate balanced graph cuts - and it is even NP hard problem.</p>
 						<p class="fragment">But, still the spectral relaxation is appealing and popular due to the fact that it results in a standard linear algebra problem, which is simple to solve.</p>
 					</section>
@@ -605,12 +605,12 @@
 					<section>
 						<h3>Random walks</h3>
 						<p>Another way to explain spectral clustering is based on random walks on the similarity graph. A <i>random walk</i> on a graph is a stochastic process, which randomly jumps from vertex to vertex.</p>
-						<p class="fragment">Later we'll see that the goal of spectral clustering here is to find a partition such that the random walk stays long within the same cluster, and seldom jumps between clusters.</p>
+						<p class="fragment">The goal of spectral clustering here is to find a partition such that the random walk stays long within the same cluster, and seldom jumps between clusters.</p>
 						<p class="fragment">Adding that to mincut problem - a graph with low cut will "force" the random walk to stay on the same cluster, because it will have less "exits".</p>
 					</section>
 					<section>
 						<h3>Random walks - cont.</h3>
-						<p>The transition probability of jumping in one step from vertex $v_i$ to $v_j$ is proportional to $W_{ij}$: $p_{ij}:=w_{ij}/d_i$. And we can define the transition matrix $P=(p_{ij})_{i,j=1,...,n}$ will be:
+						<p>The transition probability of jumping in one step from vertex $v_i$ to $v_j$ is proportional to $w_{ij}$, by $p_{ij}:=w_{ij}/d_i$. And we can define the transition matrix $P=(p_{ij})_{i,j=1,...,n}$ will be:
 							<br />
 							\[
 							P=D^{-1}W
@@ -651,7 +651,7 @@
 					<section>
 						<h3>Random walks - cont.</h3>
 						<h4>The commute distance - cont.</h4>
-						<p>There are other ways to express $c_{ij}$, with use of $L_{sym}$ or determinants of certain sub-matrices of $L$, but the reason the authors chose this expression is this: It shows that $\sqrt{c_{ij}}$ can be considered as an Euclidean distance function on the vertices of the graph.</p>
+						<p>There are other ways to express $c_{ij}$, with use of $L_{sym}$ or determinants of certain sub-matrices of $L$, but the reason of choosing this expression is this: It shows that $\sqrt{c_{ij}}$ can be considered as an Euclidean distance function on the vertices of the graph.</p>
 						<p class="fragment">This means that we can construct an embedding which maps the vertices $v_i$ of the graph on points $z_i \in \mathbb{R}^n$ such that the Euclidean distance between the points $z_i$ coincide with the commute distance on the graph: Choose $z_i \in \mathbb{R}^n$ corresponding to the $i$-th row of $U(\Lambda^\dagger)^{1/2}$, and we get:
 						<br />
 						\[
@@ -767,27 +767,7 @@
 						<p>The way to prevent those problems is this: We need to make sure that the eigenvalues of $L$ used in spectral clustering are significantly smaller than the minimal degree in the graph.</p>
 						<p class="fragment">The mathematical reason for this condition is that eigenvectors larger than the minimal degree approximate Dirac functions, which have value $\sim0$ in all but one coordinate. So, using those vectors for clustering will seperate the one vertex where the eigenvector is non-zero from the others.</p>
 						<p class="fragment">Again, those problems occurs only with unnormalized spectral clustering. Normal spectral clustering doesn't suffer from those issues.</p><br />
-						<p class="fragment"><strong>Which normalized Laplacian to use?</strong> It seems that $L_{rw}$ is a better choice: The eigenvectors of $L_{rw}$ are cluster indicator vectors $\mathbb{1}_{A_i}$, while those of $L_{sym}$ are additionally multiplied with $D^{1/2}$, which might lead to undesired artifacts. Plus, there are no computational advantages for $L_{sym}$.<br />So as conclusion, the authors suggest using $L_{rw}$.</p>
-					</section>
-				</section>
-				<section>
-					<section>
-						<h2>Conclusion</h2>
-					</section>
-					<section>
-						<h3>Some final words</h3>
-						<p>To summerize, main advantages of spectral clustering over other clustering methods are:</p>
-						<ol>
-							<li class="fragment">Spectral clustering does not make strong assumptions on the form of the clusters. (For example, $k$-means results in convex sets as clusters).</li>
-							<li class="fragment">Spectral clustering can be implemented efficiently even for large data sets, as long as we make sure that the similarity graph is sparse.</li>
-							<li class="fragment">Once the similarity graph is chosen, it is a linear problem to solve (no issues of getting stuck in local minimum or need to restart the algorithm with different parameters).</li>
-						</ol>
-						<p class="fragment">However, spectral clustering cannot serve as a "black box algorithm":</p>
-						<ol>
-							<li class="fragment">It is no trivial task to choose a good similarity graph.</li>
-							<li class="fragment">Spectral clustering can be quite unstable under differentchoices of parameters for the neighborhood graph.</li>
-						</ol>
-						<p class="fragment">So spectral clustering can be considered a powerful tool that can produce good results, if applied with care.</p>
+						<p class="fragment"><strong>Which normalized Laplacian to use?</strong> It seems that $L_{rw}$ is a better choice: The eigenvectors of $L_{rw}$ are cluster indicator vectors $\mathbb{1}_{A_i}$, while those of $L_{sym}$ are additionally multiplied with $D^{1/2}$, which might lead to undesired artifacts. Plus, there are no computational advantages for $L_{sym}$.<br />So as conclusion, $L_{rw}$ is the better choice.</p>
 					</section>
 				</section>
 				<!--<section>-->
@@ -848,6 +828,27 @@
 						<p>Now we increase $\sigma$, and we can see as the eigenvalues tend to move toward the min-deg.</p>
 						<p class="fragment">In case of $\sigma=2$, only first 3 values are below the min-deg, and in case when $\sigma=5$, only the first 2 values are below it.</p>
 						<p class="fragment">We can also see, that as soon as the eigenvalue get closer to the min-deg, their eigenvector approximate a Dirac fucntion, and they are useless for clustering.</p>
+					</section>
+				</section>
+
+				<section>
+					<section>
+						<h2>Conclusion</h2>
+					</section>
+					<section>
+						<h3>Some final words</h3>
+						<p>To summerize, main advantages of spectral clustering over other clustering methods are:</p>
+						<ol>
+							<li class="fragment">Spectral clustering does not make strong assumptions on the form of the clusters. (For example, $k$-means results in convex sets as clusters).</li>
+							<li class="fragment">Spectral clustering can be implemented efficiently even for large data sets, as long as we make sure that the similarity graph is sparse.</li>
+							<li class="fragment">Once the similarity graph is chosen, it is a linear problem to solve (no issues of getting stuck in local minimum or need to restart the algorithm with different parameters).</li>
+						</ol>
+						<p class="fragment">However, spectral clustering cannot serve as a "black box algorithm":</p>
+						<ol>
+							<li class="fragment">It is no trivial task to choose a good similarity graph.</li>
+							<li class="fragment">Spectral clustering can be quite unstable under different choices of parameters for the neighborhood graph.</li>
+						</ol>
+						<p class="fragment">So spectral clustering can be considered a powerful tool that can produce good results, if applied with care.</p>
 					</section>
 				</section>
 				<!--<section>
