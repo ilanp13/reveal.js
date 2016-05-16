@@ -246,7 +246,7 @@
 						</ol>
 						<br />
 						<br />
-						<p class="fragment">The <i>proof</i> of the 4 properties can be found in the appendix <a href="#proof1">here</a>.</p>
+						<!--<p class="fragment">The <i>proof</i> of the 4 properties can be found in the appendix <a href="#proof1">here</a>.</p>-->
 					</section>
 					<section id="spectrum_of_L">
 						<h3>Unnormalized Graph Laplacians</h3>
@@ -254,7 +254,7 @@
 						<p>Let $G$ be an undirected graph with non-negative weights. Then the multiplicity $k$ of the eigenvalue $0$ of $L$ equals the number of connected components $A_1,...,A_k$ in the graph. The eigenspace of eigenvalue $0$ is spanned by the indicator vectors $\mathbb{1}_{A_1},...,\mathbb{1}_{A_k}$ of those components.</p>
 						<br />
 						<br />
-						<p class="fragment">The <i>proof</i> can be found in the appendix <a href="#proof2">here</a>.</p>
+						<!--<p class="fragment">The <i>proof</i> can be found in the appendix <a href="#proof2">here</a>.</p>-->
 					</section>
 					<section>
 						<h3>The normalized graph Laplacians</h3>
@@ -295,7 +295,7 @@
 						</ol>
 						<br />
 						<br />
-						<p class="fragment">The <i>proof</i> of the 5 properties can be found in the appendix <a href="#proof3">here</a>.</p>
+						<!--<p class="fragment">The <i>proof</i> of the 5 properties can be found in the appendix <a href="#proof3">here</a>.</p>-->
 					</section>
 					<section id="spectrum_of_L_and_L">
 						<h3>The normalized Graph Laplacians</h3>
@@ -303,7 +303,7 @@
 						<p>Let $G$ be an undirected graph with non-negative weights. Then the multiplicity $k$ of the eigenvalue $0$ of both $L_{rw}$ and $L_{sym}$ equals the number of connected components $A_1,...,A_k$ in the graph. <br />For $L_{rw}$, the eigenspace of $0$ is spanned by the indicator vectors $\mathbb{1}_{A_1},...,\mathbb{1}_{A_k}$ of those components. <br />For $L_{sym}$, the eigenspace of $0$ is spanned by the vectors $D^{1/2}\mathbb{1}_{A_i}$.</p>
 						<br />
 						<br />
-						<p class="fragment">The <i>proof</i> can be found in the appendix <a href="#proof4">here</a>.</p>
+						<!--<p class="fragment">The <i>proof</i> can be found in the appendix <a href="#proof4">here</a>.</p>-->
 					</section>
 				</section>
 				<section>
@@ -383,10 +383,7 @@
 						<h3>Graph cut point of view</h3>
 						<p>As we know, clustering is to seperate points in different groups according to their similarities.</p>
 						<p class="fragment">If the data is given in form of a similarity graph, we can restate the clustering problem as <i>graph partitioning</i> problem, such that the edges between different groups of the graph have a very low weight, and the edges within a group have high weight.</p>
-					</section>
-					<section>
-						<h3>Graph cut point of view - mincut</h3>
-						<p>The simplest and most direct way to construct a partition of a graph is to solve the <strong>mincut</strong> problem: For a given number $k$ of subsets - choose a partition $A_1,...,A_k$ that minimizes
+						<p class="fragment">The simplest and most direct way to construct a partition of a graph is to solve the <strong>mincut</strong> problem: For a given number $k$ of subsets - choose a partition $A_1,...,A_k$ that minimizes
 							\[
 							\mbox{cut}(A_1,...,A_k):=\frac{1}{2}\sum_{i=1}^kW(A_i,\bar{A_i})
 							\]
@@ -594,8 +591,8 @@
 					</section>
 					<section>
 						<h3>Comments on relaxation approach</h3>
-						<p>One important fact to remember: There is no guarantee on the quality of the solution of the relaxed problem, in compare with the exact solution. The diff between them can be large. Lets look on the next graph:</p>
-						<img data-src="imgs/figure2.png" style="border: 0 none;" class="fragment" />
+						<p>One important fact to remember: There is no guarantee on the quality of the solution of the relaxed problem, in compare with the exact solution. The diff between them can be large. Lets look on the next graph:
+						<img data-src="imgs/figure2.png" style="float:right; border: 0 none; padding: 0 0 10px 10px;" class="fragment" /></p>
 						<p class="fragment">This graph is called <i>The cockroach graph</i> (Guattery and Miller (1998)). The ideal cut for $k=2$ will obviously be cutting the edges $(v_k,v_{k+1}),(v_{3k},v_{3k+1})$, which will give RatioCut value of $2/k$. But the authors showed that unnormalized spectral clustering always cuts the vertical edges, causing the RatioCut value to be $1$.</p>
 						<p class="fragment">In general it is known that there are no efficient algorithms to approximate balanced graph cuts - and it is even NP hard problem.</p>
 						<p class="fragment">But, still the spectral relaxation is appealing and popular due to the fact that it results in a standard linear algebra problem, which is simple to solve.</p>
@@ -630,7 +627,7 @@
 						\[
 							\mbox{Ncut}(A,\bar{A})=P(\bar{A}\mid A) + P(A \mid \bar{A}).
 						\]</p>
-						<p class="fragment">The <i>proof</i> can be found in the appendix <a href="#proof5">here</a>.</p>
+						<!--<p class="fragment">The <i>proof</i> can be found in the appendix <a href="#proof5">here</a>.</p>-->
 						<p class="fragment">This leads to a nice interpretation of Ncut and normalized spectral clustering: when we minimize Ncut, we actually searching for a cut such that a random walk seldom transitions $A$ to $\bar{A}$ and vice versa.</p>
 					</section>
 					<section>
@@ -744,18 +741,73 @@
 					</section>
 					<section>
 						<h3>Which graph Laplacian to use?</h3>
+						<p>When coming to choose the Laplacian we want to use, first we need to look over the degree distribution of the graph vertices. If they all have (more or less) the same degree, then all three Laplacians will do equally well.</p>
+						<p class="fragment">Remember, the partition we find in clustering needs to:</p>
+						<ol>
+							<li class="fragment">Minimize the between-cluster similarity (minimizing $\mbox{cut}(A,\bar{A})$).</li>
+							<li class="fragment">Maximize the within-cluster similarity (maximizing $W(A,A)$ and $W(\bar{A},\bar{A})$).</li>
+						</ol>
+						<p class="fragment">Both Ncut and RatioCut implement the first objective. But what about the second objective? We can write the within-cluster similarities in another way:
+						<br />
+						\[
+							W(A,A)=W(A,V)-W(A,\bar{A})=\mbox{vol}(A)-\mbox{cut}(A,\bar{A})
+						\]</p>
+						<p class="fragment">Which means that it is maximized if $\mbox{cut}(A,\bar{A})$ is small and $\mbox{vol}(A)$ is large - and we achieve exactly that by minimizing Ncut. So <i>Ncut</i> implement the 2nd objective.</p>
+						<p class="fragment">But RatioCut maximizes $|A|$ and $|\bar{A}|$ and not the $\mbox{vol}(A)$, and that means that RatioCut doesn't implement the 2nd objective.</p>
+						<p class="fragment">So, Normalized spectral clustering (Ncut) implement both objective, while unnormalized spectral clustering (RatioCut) only implement the first.</p>
+					</section>
+					<section>
+						<h3>Which graph Laplacian to use? - cont.</h3>
+						<p>Another issue to consider is consistency: What happen when more and more points are added? Do the clustering results of spectral clustering converge to a useful partition?</p>
+						<p class="fragment">For both normalized spectral clustering algorithms, it can be proved that the results do converge, as we take $n \to \infty$. In that limit, $L_{sym}$ converges to an operator $U$, which means that the eigenvectors and eigenvalues of $L_{sym}$ converges into those of $U$. Similar proof can be shown about random walk. So the consistency of both $L_{rw}$ and $L_{sym}$ hold.</p>
+						<p class="fragment">That can't be said about unnormalized spectral clustering algorithm. It can be proved that $L$ doesn't converge, or converge to trivial solution, such as single point being a cluster. That's true not only for very large sample size, but even in case of small sample size. </p>
+					</section>
+					<section>
+						<h3>Which graph Laplacian to use? - cont.</h3>
+						<p>The way to prevent those problems is this: We need to make sure that the eigenvalues of $L$ used in spectral clustering are significantly smaller than the minimal degree in the graph.</p>
+						<p class="fragment">The mathematical reason for this condition is that eigenvectors larger than the minimal degree approximate Dirac functions, which have value $\sim0$ in all but one coordinate. So, using those vectors for clustering will seperate the one vertex where the eigenvector is non-zero from the others.</p>
+						<p class="fragment">Again, those problems occurs only with unnormalized spectral clustering. Normal spectral clustering doesn't suffer from those issues.</p><br />
+						<p class="fragment"><strong>Which normalized Laplacian to use?</strong> It seems that $L_{rw}$ is a better choice: The eigenvectors of $L_{rw}$ are cluster indicator vectors $\mathbb{1}_{A_i}$, while those of $L_{sym}$ are additionally multiplied with $D^{1/2}$, which might lead to undesired artifacts. Plus, there are no computational advantages for $L_{sym}$.<br />So as conclusion, the authors suggest using $L_{rw}$.</p>
 					</section>
 				</section>
-				<section>
-					<h2>Appendices</h2>
-				</section>
-
 				<section>
 					<section>
-						<h2>toy example - starts in pages 8-9</h2>
+						<h2>Conclusion</h2>
+					</section>
+					<section>
+						<h3>Some final words</h3>
+						<p>To summerize, main advantages of spectral clustering over other clustering methods are:</p>
+						<ol>
+							<li class="fragment">Spectral clustering does not make strong assumptions on the form of the clusters. (For example, $k$-means results in convex sets as clusters).</li>
+							<li class="fragment">Spectral clustering can be implemented efficiently even for large data sets, as long as we make sure that the similarity graph is sparse.</li>
+							<li class="fragment">Once the similarity graph is chosen, it is a linear problem to solve (no issues of getting stuck in local minimum or need to restart the algorithm with different parameters).</li>
+						</ol>
+						<p class="fragment">However, spectral clustering cannot serve as a "black box algorithm":</p>
+						<ol>
+							<li class="fragment">It is no trivial task to choose a good similarity graph.</li>
+							<li class="fragment">Spectral clustering can be quite unstable under differentchoices of parameters for the neighborhood graph.</li>
+						</ol>
+						<p class="fragment">So spectral clustering can be considered a powerful tool that can produce good results, if applied with care.</p>
 					</section>
 				</section>
+				<!--<section>-->
+					<!--<h2>Appendices</h2>-->
+				<!--</section>-->
 				<section>
+					<section>
+						<h2>Toy example</h2>
+					</section>
+					<section>
+						<h3>Toy example</h3>
+						<p>This example data set consists of a random sample of 200 points $x_1,...,x_{200}\in\mathbb{R}$ drawn according to a mixture of four Gaussians.</p>
+						<img data-src="imgs/figure1.png" style="width: 58%; padding-left: 2%; float: right;">
+						<p style="font-size:20px; width: 38% !important; float: left;">The first row shows the histogram of a sample drawn from this distribution (the $x$-axis represents the one-dimensional data space). The Gaussian similarity function was chosen, with $\sigma=1$. Both fully connected and $10$-nearest neighbor graphs are considered.</p>
+					</section>
+					<section>
+						<h3>Toy example - cont.</h3>
+					</section>
+				</section>
+				<!--<section>
 					<section>
 						<h2>Mathematical Proofs</h2>
 					</section>
@@ -779,7 +831,7 @@
 						<h3>Proof of the spectrum of L and L</h3>
 						<a href="#rw_first_prop">back</a>
 					</section>
-				</section>
+				</section>-->
 			</div>
 
 		</div>
